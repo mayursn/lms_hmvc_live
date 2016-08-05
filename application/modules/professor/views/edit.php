@@ -87,7 +87,7 @@ $degree_list = $this->db->get('degree')->result();
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><?php echo ucwords("department"); ?><span style="color:red">*</span></label>
                         <div class="col-sm-8">
-                            <select id="degree" name="degree" class="form-control" required="">
+                            <select id="degree" name="degree" class="form-control" >
                                 <option value="">Select</option>
                                 <?php foreach ($degree_list as $degree) { ?>
                                     <option value="<?php echo $degree->d_id; ?>"
@@ -99,7 +99,7 @@ $degree_list = $this->db->get('degree')->result();
                     <div class="form-group">
                         <label class="col-sm-4 control-label"><?php echo ucwords("branch"); ?><span style="color:red">*</span></label>
                         <div class="col-sm-8">
-                            <select id="branch" name="branch" class="form-control" required="">
+                            <select id="branch" name="branch" class="form-control" >
                                 <option value="">Select</option>                                   
                             </select>
                         </div>	
@@ -217,7 +217,7 @@ $degree_list = $this->db->get('degree')->result();
             //get branch from courses
             $('#degree').on('change', function () {
                 $('#branch').find('option').remove().end();
-                $('#branch').append('<option>Select</option>');
+                $('#branch').append('<option value="">Select</option>');
                 var degree_id = $(this).val();
                 $.ajax({
                     url: '<?php echo base_url(); ?>branch/department_branch/' + degree_id,

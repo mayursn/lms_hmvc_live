@@ -49,7 +49,7 @@ $branch = $this->Course_model->order_by_column('c_name');
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo ucwords("Total Marks"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" name="total_marks" id="total_marks"
+                        <input type="number" class="form-control" name="total_marks" id="total_marks" min="0"
                                value="<?php echo set_value('total_marks'); ?>"/>
                     </div>
                 </div>                

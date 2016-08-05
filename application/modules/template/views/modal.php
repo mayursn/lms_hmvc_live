@@ -17,6 +17,7 @@
 <script type="text/javascript">
     function showAjaxModal(url)
     {
+       
         if(url.indexOf("edit_") >= 0) {
             $('#myModalLabel2').html('<?php echo @$edit_title; ?>');
         } else if(url.indexOf("add") >= 0) {
@@ -35,7 +36,10 @@
                $('#myModalLabel2').html('Professor Details');
         } else if(url.indexOf("modal_survey_detal") >= 0) {
                $('#myModalLabel2').html('Survey Detail');
+        } else if(url.indexOf("exam_addinternal") >= 0) {
+               $('#myModalLabel2').html('Internal Exam Marks');
         }
+        
         // SHOWING AJAX PRELOADER IMAGE
         jQuery('#modal_ajax .modal-body').html('<div style="text-align:center;margin-top:200px;"><img src="<?php echo base_url(); ?>assets/img/preloader.gif" /></div>');
 

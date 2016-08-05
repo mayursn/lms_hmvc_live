@@ -41,9 +41,6 @@ class Marks extends MY_Controller {
         $this->data['time_table'] = $this->Exam_time_table_model->time_table();
         if($_POST)
         {
-            echo "<pre>";
-           // print_r($_POST);
-            
             //exam details
 
             $exam_detail = $this->Exam_manager_model->exam_detail($exam_id);

@@ -183,13 +183,19 @@
             $("#chartiyfund").validate({
                 rules: {
                     donor_name: "required",
-                    amount: "required",
+                    amount:{
+                    required: true,
+                    currency: ['$', false]
+                },
                     donation_type: "required",
                     donor_mobile: "required"
                 },
                 messages: {
                     donor_name: "Please enter donor name",
-                    amount: "Please enter amount",
+                    amount: {
+                            required: "Enter  amount",
+                            currency: "Enter valid amount"
+                        },
                     donation_type: "Please select donation type",
                     donor_mobile: "Please enter mobile number"
                 }
