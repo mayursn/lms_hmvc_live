@@ -95,7 +95,7 @@
 <!-- End contentwrapper -->
 </div>
 <!-- End #content -->
-
+</div></div></div>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
     $.validator.setDefaults({
