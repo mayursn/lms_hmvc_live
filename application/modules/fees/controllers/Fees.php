@@ -17,7 +17,10 @@ class Fees extends MY_Controller {
         $this->load->model('branch/Course_model');
         $this->load->model('semester/Semester_model');
          $this->load->model('batch/Batch_model');
-         
+         if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
         
        
       
@@ -160,12 +163,27 @@ class Fees extends MY_Controller {
         //$fees_structure = $this->Fees_structure_model->get_many_by();
         echo json_encode($fees_structure);
     }
+    function check_student_paidfee()
+    {
+        $fees_structure_id=$this->input->post('fees_structure');
+        $student_id=$this->input->post('student_id');
+          $paid_fees = $this->Fees_structure_model->paid_student_fees($fees_structure_id,$student_id);
+        if(count($paid_fees)>0)
+        {
+            echo 'false';
+        }
+        else
+        {
+            echo 'true';
+        }
+    }
     
      /**
      * Student fees structure details
      * @param string $fees_structure_id
      */
     function student_fees_structure_details($fees_structure_id) {
+      
         $fees_structure = $this->Fees_structure_model->get($fees_structure_id);
         echo json_encode($fees_structure);
     }

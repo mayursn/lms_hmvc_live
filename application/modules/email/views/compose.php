@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/select2.min.css"/>
 <script src="//cdn.ckeditor.com/4.5.9/full/ckeditor.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/select2.full.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/plugins/select2.js"></script>
 <style>
 
     .select2-container-multi .select2-choices .select2-search-field input{
@@ -19,8 +20,7 @@
                     <label class="col-sm-2 control-label"><?php echo ucwords("user type"); ?></label>
                     <div class="col-sm-5">
                         <select class="form-control" id="user_type" name="user_type" required="">
-                            <option value="">Select</option>    
-                            <option value="all">All</option>
+                            <option value="">Select</option>                            
                             <?php foreach ($user_type as $role) { ?>}
                                 <option value="<?php echo $role->role_id; ?>"><?php echo $role->role_name; ?></option>
                             <?php } ?>
@@ -139,6 +139,7 @@
 <script type="text/javascript">
     $(".email_select2").select2();
     $("#check_all_user").click(function () {
+        
         if ($("#check_all_user").is(':checked')) {
             $(".email_select2 > option").prop("selected", "selected");
             $(".email_select2").trigger("change");
@@ -146,6 +147,18 @@
             $(".email_select2 > option").removeAttr("selected");
             $(".email_select2").trigger("change");
         }
+    });
+    
+    $("#email").click(function(){
+        if($('#email option').length == $('#email :selected').length)
+        {
+            $('#check_all_user').attr('checked', true);
+        }
+        else
+        {
+            $('#check_all_user').attr('checked', false);
+        }
+       
     });
 </script>
 <script>

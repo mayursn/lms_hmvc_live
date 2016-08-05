@@ -25,6 +25,13 @@ class Fees_structure_model extends MY_Model {
      * @return array
      */
     function get_all_fees_structure() {
+        
+        if($this->session->userdata('professor_id'))
+        {
+            $degree_id = $this->session->userdata('professor_department');
+            $this->db->where('degree_id', $degree_id);
+            $this->db->or_where('degree_id ', 'All'); 
+        }
         return $this->db->select()
                         ->from('fees_structure')                      
                         ->get()
@@ -73,6 +80,13 @@ class Fees_structure_model extends MY_Model {
                         ))
                         ->get()
                         ->result();
+    }
+    
+    function  paid_student_fees($fees_structure_id,$stdid)
+    {
+        $this->db->where('student_id',$stdid);
+        $this->db->where('fees_structure_id',$fees_structure_id);
+        return $this->db->get('student_fees')->result();
     }
 
 }

@@ -16,6 +16,7 @@ $delete = delete_permission($permission, 'Forum_Comments');
                 <a href="#" class="links" onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/comments_create/<?php echo $param; ?>');" data-toggle="modal"><i class="fa fa-plus"></i> Forum Comment</a>
                 <?php } ?>
                 <?php if($create || $read || $update || $delete){ ?>
+
                 <table id="datatable-list" class="table table-striped table-bordered table-responsive" cellspacing=0 width=100%>
                     <thead>
                         <tr>
@@ -51,7 +52,8 @@ $delete = delete_permission($permission, 'Forum_Comments');
                                     } else {
                                         echo $date;
                                     }
-                                    ?></td>
+                                    ?>
+                                </td>
                                 <td>
                                     <?php if (!empty($row->topic_file)) { ?>
                                         <a href="<?php echo base_url() . 'uploads/forum_file/' . $row->topic_file; ?>" download=""><i class="fa fa-download"></i></a>
@@ -75,7 +77,6 @@ $delete = delete_permission($permission, 'Forum_Comments');
                                     <?php } ?>
                                 </td>
                                 <?php } ?>
-                                    
                             </tr>
                         <?php endforeach; ?>		
                     </tbody>

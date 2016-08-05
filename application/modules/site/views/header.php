@@ -44,15 +44,18 @@
                                                 $user =  $this->User_model->get($user_id);   
 
                                                     $name = $user->first_name.' '.$user->last_name;
-                                                    $dashboard_url = base_url('user/dashboard/');
+                                                    $dashboard_url = base_url('user/dashboard/');                                                    
                                                     $profile_url = base_url('profile');
-                                                    $image = base_url('uploads/system_image/'.$user->profile_pic);
+                                                    if($user->profile_pic!='')
+                                                    {
+                                                          $image = base_url('uploads/system_image/'.$user->profile_pic);
+                                                    }
                                            
                                             ?>
                                             <li>
                                                 <div class="cs-user-login">
                                                     <div class="cs-media">
-                                                        <figure><img alt="" src="<?php echo isset($image) ? $image : base_url('site_assets/extra-images/xuser-login-img-1.jpg.pagespeed.ic.HDstrn5dKp.jpg'); ?>"></figure>
+                                                        <figure><img alt="" src="<?php echo isset($image) ? $image : base_url('assets/img/avatar.jpg'); ?>"></figure>
                                                     </div>
                                                     <a href="#"><?php echo $name; ?></a>
                                                     <ul>
@@ -81,12 +84,12 @@
                             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                 <div class="cs-logo cs-logo-dark">
                                     <div class="cs-media">
-                                        <figure><a href="<?php echo base_url('home'); ?>"><img style="margin-top: -20px;" src="<?php echo base_url(); ?>assets/img/logo.png" alt=""/></a></figure>
+                                        <figure><a href="<?php echo base_url(); ?>"><img style="margin-top: -20px;" src="<?php echo base_url(); ?>assets/img/logo.png" alt=""/></a></figure>
                                     </div>
                                 </div>
                                 <div class="cs-logo cs-logo-light">
                                     <div class="cs-media">
-                                        <figure><a href="<?php echo base_url('home'); ?>"><img src="<?php echo base_url(); ?>site_assets/images/xcs-logo-light.png.pagespeed.ic.Q1HdweYLsy.png" alt=""/></a></figure>
+                                        <figure><a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>site_assets/images/xcs-logo-light.png.pagespeed.ic.Q1HdweYLsy.png" alt=""/></a></figure>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +97,7 @@
                                 <div class="cs-main-nav pull-right">
                                     <nav class="main-navigation">
                                         <ul>
-                                            <li><a href="<?php echo base_url('home'); ?>">Home</a><span>About College</span></li>
+                                            <li><a href="<?php echo base_url(); ?>">Home</a><span>About College</span></li>
                                             <li><a href="<?php echo base_url('about'); ?>">About</a><span>About Us</span></li>
                                             <li class="menu-item-has-children"><a href="#">Courses</a>
                                                 <span>Online Education</span>
@@ -107,7 +110,7 @@
                                             <li><a href="<?php echo base_url('events'); ?>">Events</a><span>University Events</span>
 
                                             </li>
-                                            <li><a href="<?php echo base_url('syllabus'); ?>">Syllabus</a><span>Syllabus</span>
+                                            <li><a href="<?php echo base_url('get_syllabus'); ?>">Syllabus</a><span>Syllabus</span>
                                             </li>
                                             <li><a href="<?php echo base_url(); ?>site/gallery">Gallery</a><span>Gallery</span></li>
                                             <li><a href="<?php echo base_url('site/forums'); ?>">Forum</a><span>Forum</span>

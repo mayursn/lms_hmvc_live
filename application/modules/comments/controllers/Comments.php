@@ -13,6 +13,10 @@ class Comments extends MY_Controller {
         parent::__construct();
         $this->load->model('comments/Forum_comment_model');
         $this->load->model('forumtopic/Forum_topics_model');
+        if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
     }
 
     function index($id='') {
@@ -109,14 +113,16 @@ class Comments extends MY_Controller {
                        
                     }
              }
-            $data['forum_topic_id'] = $id;
-            $comment_id = $this->input->post("comment_id");
+              $comment_id = $this->input->post("comment_id");
+            $topic_id = $this->Forum_comment_model->get($comment_id);
+            $data['forum_topic_id'] = $topic_id->forum_topic_id;            
+           
             $data['forum_comments'] = $this->input->post('comment');
             $data['forum_comment_status'] = $this->input->post('comment_status');
-            $data['user_role'] = $this->session->userdata('role_name');
-            $data['user_role_id'] = $this->session->userdata('user_id');
+           // $data['user_role'] = $this->session->userdata('role_name');
+           // $data['user_role_id'] = $this->session->userdata('user_id');
         
-            $this->Forum_comment_model->update($id, $data);
+            $this->Forum_comment_model->update($comment_id, $data);
             $this->flash_notification('Forum Comment is successfully updated.');
         }
 

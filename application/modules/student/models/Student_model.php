@@ -79,7 +79,7 @@ class Student_model extends MY_Model {
     function get_timline_todolist()
     {
         $this->db->select('todo_id,todo_title,todo_datetime');
-        return $this->db->get_where('todo_list',array('todo_role'=>'student','todo_role_id'=>$this->session->userdata('std_id')))->result();
+        return $this->db->get_where('todo_list',array('todo_role'=>'student','user_role_id'=>$this->session->userdata('user_id')))->result();
       //  return $this->db->get_where('todo_list',array('todo_datetime >='=> date('Y-m-d H:m:s'),'todo_role'=>'student','todo_role_id'=>$this->session->userdata('student_id')))->result();
     }
     function get_timline_event()
@@ -91,9 +91,10 @@ class Student_model extends MY_Model {
     
      function get_timeline_date_count()
     {
-        $todolist=$this->db->query('SELECT DISTINCT date(todo_datetime) from todo_list where todo_datetime >= "'.date('Y-m-d').'"')->result();
+        $todolist=$this->db->query('SELECT DISTINCT date(todo_datetime) from todo_list where user_role_id ="'.$this->session->userdata("user_id").'" and todo_datetime >= "'.date('Y-m-d').'"')->result();
+       
         $event=$this->db->query('SELECT DISTINCT date(event_date) from event_manager where event_date >= "'.date('Y-m-d').'"')->result();
-        
+      
         foreach ($todolist as $todo) {
             foreach ($todo as $row) {               
                 $data[]=$row;
@@ -108,14 +109,6 @@ class Student_model extends MY_Model {
         
         $result=  array_unique($data);
         return $result;
-//        if(count($todolist)>count($event))
-//        {
-//            return $todolist;
-//        }
-//        else
-//        {
-//            return $event;
-//        }
     }
     
      /**

@@ -19,6 +19,10 @@ class Studyresource extends MY_Controller {
         $this->load->model('semester/Semester_model');
         $this->load->model('classes/Class_model');     
        // $this->load->model('notification');
+        if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
     }
 
     function index() {
@@ -265,8 +269,8 @@ class Studyresource extends MY_Controller {
             if ($course == "All") {
                 $this->db->select('study_id,study_title,study_degree,study_course,study_batch,study_sem,study_dos,study_filename');
                 $this->db->where("study_degree", $degree);
-                $array = array("study_degree"=> $degree);
-                $this->Study_resources_model->get_many_by('study_id');
+                //$array = array("study_degree"=> $degree);
+               // $this->Study_resources_model->get_many_by('study_id');
                 $this->data['studyresource'] = $this->db->get('study_resources')->result();
             } else {
                 if ($batch == 'All') {

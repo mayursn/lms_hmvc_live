@@ -32,7 +32,7 @@ class User_model extends MY_Model {
      * @return mixed
      */
     protected function update_timestamps($user) {
-        
+      
         if(check_role_approval())
         {
             $user['is_active'] = 0;
@@ -63,6 +63,15 @@ class User_model extends MY_Model {
                         ->where('user_id',$this->session->userdata('user_id'))->get()->result();
     }
 
+    function password_update($id,$data)
+    {
+        $this->db->where('user_id',$id);
+        $this->db->update('user',$data);
+    }
     
-
+    function profile_update($id,$data)
+    {
+        $this->db->where('user_id',$id);
+        $this->db->update('user',$data);
+    }
 }

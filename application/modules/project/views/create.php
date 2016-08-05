@@ -90,21 +90,20 @@
                                 </select>
                             </div>
                         </div>  
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label"><?php echo ucwords("Student"); ?><span style="color:red">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="checkbox" name="checkall" id="select_all"  >Check All<br>
-                                <div id="student"><input type="hidden" name="student[]" value=""  /></div>
-                                <label class="error" id="error_std" for="student[]"></label>
-                               <!--<select name="student[]" id="student" multiple="">
-                                   <option value="">Select student</option>
-                                                                                 </select>-->
+                        <div id="stdlist" hidden>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"><?php echo ucwords("Student"); ?><span style="color:red">*</span></label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" name="checkall" id="select_all"  >Check All<br>
+                                    <div id="student"></div>
+                                    <label class="error" id="error_std" for="student[]"></label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("Date of Submission"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text"  readonly="" class="form-control" name="dateofsubmission" id="dateofsubmission" />
+                                <input type="text" class="form-control" name="dateofsubmission" id="dateofsubmission" />
                             </div>
                         </div>
                         <input type="hidden" class="form-control" name="pageurl" id="pageurl" />
@@ -146,9 +145,6 @@
 <script type="text/javascript">
 
     var js_date_format = '<?php echo js_dateformat(); ?>';
-    $("#checkAll").change(function () {
-        $("input:checkbox").prop('checked', $(this).prop("checked"));
-    });
     
     $("#batch").change(function () {
         $("#student").html('');
@@ -259,7 +255,7 @@
             type: 'POST',
             data: {'batch': batch, 'sem': sem, 'course': course, 'degree': degree, 'divclass': divclass},
             success: function (content) {
-                //alert(content);
+                 $('#stdlist').show();
                 $("#student").html(content);
             }
         });
@@ -350,7 +346,7 @@
                             required: true,
                             url: true,
                         },
-                projectfile: {
+                'projectfile[]': {
                     required: true,
                     extension: 'gif|jpg|png|pdf|xlsx|xls|doc|docx|ppt|pptx|pdf|txt|zip|rar',
                 },
@@ -366,8 +362,8 @@
                 class: "Select class",
                 'student[]': "Select Student",
                 dateofsubmission: "Select date of submission",
-                projectfile: {
-                    required: "Upload file!",
+                'projectfile[]': {
+                    required: "Select file",
                     extension: 'Upload valid file!',
                 },
                 title:

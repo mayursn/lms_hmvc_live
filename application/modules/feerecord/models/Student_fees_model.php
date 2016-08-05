@@ -142,4 +142,27 @@ class Student_fees_model extends MY_Model {
                         ->result();
     }
 
+     /**
+     * Fee structure filter
+     * @param string $degree
+     * @param string $course
+     * @param string $batch
+     * @param string $semeter
+     * @return mixed
+     */
+    function fee_structure_filter_list($degree, $course, $batch, $semeter) {
+        $where1 = "fees_structure.degree_id='$degree' OR fees_structure.degree_id='All'";
+        $where2 = "fees_structure.course_id='$course' OR fees_structure.course_id='All'";
+        $where3 = "fees_structure.batch_id='$batch' OR fees_structure.batch_id='All'";
+        $where4 = "fees_structure.sem_id='$semeter' OR fees_structure.sem_id='All'";
+        return $this->db->select()
+                        ->from('fees_structure')                      
+                        ->where($where1)
+                        ->where($where2)
+                        ->where($where3)
+                        ->where($where4)
+                        ->order_by('created_at', 'DESC')
+                        ->get()
+                        ->result();
+    }
 }

@@ -15,6 +15,12 @@ class Student extends MY_Controller {
          $this->session->set_userdata('notifications', $notification);
            date_default_timezone_set('Etc/UTC');
          }         
+         if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
+        $this->load->helper('text');
+        date_default_timezone_set('Asia/Kolkata');
     }
 
     /**
@@ -24,6 +30,10 @@ class Student extends MY_Controller {
         if($this->session->userdata('professor_id'))
         {
             redirect(base_url('student/professor_student'));
+        }
+        if($this->session->userdata('std_id'))
+        {
+            redirect(base_url('student/dashboard'));
         }
         $this->data['title'] = 'Student';
         $this->data['page'] = 'student';
@@ -58,14 +68,32 @@ class Student extends MY_Controller {
         // $this->data['timeline'] = $this->Student_model->get_timline();
         $this->data['timline_todolist'] = $this->Student_model->get_timline_todolist();
         $this->data['timline_event'] = $this->Student_model->get_timline_event();
-        $this->data['timelinecount'] = $this->Student_model->get_timeline_date_count();
+        $this->data['timelinecount1'] = $this->Student_model->get_timeline_date_count();
+        
+         if($this->data['timelinecount1']!='')
+        {
+             foreach($this->data['timelinecount1'] as $dt)
+            {
+                $dtd[]=strtotime($dt);
+            }
+             array_multisort($dtd);
+        foreach($dtd as $dt1)
+            {
+                $this->data['timelinecount'][]=date('Y-m-d',$dt1);
+            }
+        }
+        else
+        {
+            $this->data['timelinecount']=array();
+        }
+        
          $user_id = $this->session->userdata('std_id');
         $this->data['growth']  = $this->Student_model->get_growth($user_id);
         $this->data['page'] = 'dashboard';
         $this->__template('student/dashboard', $this->data);
     }
     
-/**
+    /**
      * Create student user
      * @param array $student
      * @return int
@@ -115,21 +143,14 @@ class Student extends MY_Controller {
                 'city'  => $_POST['city'],
                 'zip'   => $_POST['zip'],
                 'std_birthdate' => date('Y-m-d', strtotime($_POST['birthdate'])),
-                'std_marital'   => $_POST['maritalstatus'],
                 'std_batch' => $_POST['batch'],
                 'semester_id'   => $_POST['semester'],
                 'std_degree'    => $_POST['degree'],
                 'course_id' => $_POST['course'],
                 'class_id'  => $_POST['class'],
                 'std_about' => $_POST['std_about'],
-                'std_mobile'    => $_POST['mobileno'],
-                'parent_name'   => $_POST['parentname'],
-                'parent_contact'    => $_POST['parentcontact'],
-                'parent_email'  => $_POST['parent_email_id'],
+                'std_mobile'    => $_POST['mobileno'],               
                 'admission_type_id' => $_POST['admissiontype'],
-                'std_fb'    => $_POST['facebook'],
-                'std_twitter'   => $_POST['twitter'],
-                'std_status'=>1
             ));   
             $student=array('f_name'=>$_POST['f_name'],
                            'l_name'=>$_POST['l_name'],
@@ -167,21 +188,15 @@ class Student extends MY_Controller {
                 'class_id'  => $_POST['class'],
                 'std_about' => $_POST['std_about'],
                 'std_mobile'    => $_POST['mobileno'],
-                'parent_name'   => $_POST['parentname'],
-                'parent_contact'    => $_POST['parentcontact'],
-                'parent_email'  => $_POST['parent_email_id'],
                 'admission_type_id' => $_POST['admissiontype'],
-                'std_fb'    => $_POST['facebook'],
-                'std_twitter'   => $_POST['twitter'],
-                'std_status'=>1
             ));  
                $this->flash_notification('Student is successfully updated.');
           }
           redirect(base_url('student'));
       }
-       function update_professor_profile_pic($files)
+       function update_student_profile_pic($files)
         {
-            if ($files['userfile']['name'] != '') {
+            if ($files['profilefile']['name'] != '') {
                 $config['upload_path'] = 'uploads/system_image';
                 $config['allowed_types'] = 'gif|jpg|png';
                 $this->load->library('upload', $config);
@@ -189,7 +204,7 @@ class Student extends MY_Controller {
 
                 if (!$this->upload->do_upload('userfile')) {
                     $this->session->set_flashdata('flash_message', "Invalid File!");
-                    redirect(base_url('professor'));
+                    redirect(base_url('student'));
                 } else {
                     $file = $this->upload->data();
                     $data['profile_photo'] = $file['file_name'];
@@ -197,6 +212,32 @@ class Student extends MY_Controller {
                  return $data['profile_photo'];
             }
         }
+          /**
+     * Upload student profile picture
+     * @param array $_FILES
+     * @return string
+     */
+    function upload_student_profile_pic($files) {
+        if ($files['profilefile']['name'] != '') {
+            $config['upload_path'] = 'uploads/system_image';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('profilefile')) {
+                $this->session->set_flashdata('flash_message', "Invalid File!");
+                redirect(base_url('student'));
+            } else {
+                $file = $this->upload->data();
+                $data['profile_photo'] = $file['file_name'];
+                //$file_url = base_url().'uploads/project_file/'.$data['lm_filename'];
+            }
+        } else {
+            $data['profile_photo'] = '';
+        }
+
+        return $data['profile_photo'];
+    }
        function update_student_user($id,$student, $files) {
       
         if ($student) {
@@ -213,7 +254,7 @@ class Student extends MY_Controller {
                         'address'  => $student['address'],  
                         'is_active' => $student['status']
                     );
-            $filedata=$this->update_professor_profile_pic($files); 
+            $filedata=$this->upload_student_profile_pic($files); 
             if($filedata!="")
             {
                $data['profile_pic']=$filedata; 
@@ -281,34 +322,6 @@ class Student extends MY_Controller {
     }
 
     /**
-     * Upload student profile picture
-     * @param array $_FILES
-     * @return string
-     */
-    function upload_student_profile_pic($files) {
-        if ($files['userfile']['name'] != '') {
-            $config['upload_path'] = 'uploads/system_image';
-            $config['allowed_types'] = 'gif|jpg|png';
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-
-            if (!$this->upload->do_upload('profilefile')) {
-                $this->session->set_flashdata('flash_message', "Invalid File!");
-                redirect(base_url('student'));
-            } else {
-                $file = $this->upload->data();
-                $data['profile_photo'] = $file['file_name'];
-                //$file_url = base_url().'uploads/project_file/'.$data['lm_filename'];
-            }
-        } else {
-            $data['profile_photo'] = '';
-        }
-
-        return $data['profile_photo'];
-    }
-    
-   
-    /**
      * Delete student
      * @param string $id
      */
@@ -316,7 +329,6 @@ class Student extends MY_Controller {
         
     }
 
-     
     /**
      * Compare and update password
      * @param string $user_id
@@ -334,8 +346,6 @@ class Student extends MY_Controller {
             ));
         }
     }
-
-    
 
      /**
      * Load filtered students
@@ -446,7 +456,7 @@ function student_exam_marks()
         $this->load->view('student/student_exam_marks',$this->data);
     }
     
-    function student_exam_listing_widget($student_details) {       
+    function student_exam_listing_widget($student_details ='') {       
        
         
         $page_data['exam_listing'] = $this->Exam_time_table_model->get_exam_listing($student_details);
@@ -481,7 +491,7 @@ function student_exam_marks()
      * @return mixed
      */
     
-     function student_cms_page_list_widget($student_detail) {
+     function student_cms_page_list_widget($student_detail='') {
         //echo $student_detail->std_batc
         $cms_pages = $this->db->get_where('cms_pages', array(
                     'am_course' => $student_detail->course_id,
@@ -496,7 +506,7 @@ function student_exam_marks()
      * @param mixed $student_details
      * @return mixed
      */
-     function streaming_list_widget($student_details) {
+     function streaming_list_widget($student_details = '') {
         $date = date('Y-m-d');
         //var_dump($student_details);
         $where = array(
@@ -669,7 +679,7 @@ function student_exam_marks()
         $std_id =$this->session->userdata('std_id');
         $this->data['student'] = $this->Student_model->get($std_id);
         $student = $this->data['student'];
-        $course_id = $student->course_id;
+        $course_id = $student->course_id;        
         $semester_id = $student->semester_id;
         
         $this->data['subjects'] = $this->Student_model->student_subject_list(
@@ -678,7 +688,8 @@ function student_exam_marks()
         $this->__template('student/attendance_report', $this->data);
     }
     
-    function attendance_report_detail($subject_id) {
+    function attendance_report_detail($subject_id ='') {
+        
         $this->data['title'] = 'Attendance reports details';
         $this->data['page'] = 'attendance';
         $this->data['report'] = $this->Student_model->attendance_detail_report(

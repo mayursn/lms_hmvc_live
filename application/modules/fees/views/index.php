@@ -173,7 +173,7 @@ $delete = delete_permission($permission, 'Fee');
 
             if (form.valid() == true)
             {
-                $('#all-fee-structure').hide();
+               // $('#all-fee-structure').hide();
                 var degree = $("#search-degree").val();
                 var course = $("#search-course").val();
                 var batch = $("#search-batch").val();

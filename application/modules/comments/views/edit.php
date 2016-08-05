@@ -19,7 +19,7 @@ $comment = $this->Forum_comment_model->get($param2);
                         <span style="color:red">* <?php echo "is " . ucwords("mandatory field"); ?></span> 
                     </div>                       
 
-                    <?php echo form_open(base_url() . 'comments/update/' . $param2, array('class' => 'form-horizontal form-groups-bordered validate', 'role' => 'form', 'id' => 'frmadmission_type', 'target' => '_top', 'enctype' => 'multipart/form-data')); ?>
+                    <?php echo form_open(base_url() . 'comments/update/' . $comment->forum_topic_id, array('class' => 'form-horizontal form-groups-bordered validate', 'role' => 'form', 'id' => 'frmadmission_type', 'target' => '_top', 'enctype' => 'multipart/form-data')); ?>
                     <div class="padded">                        
                         <input type="hidden" name="comment_id" value="<?php echo $comment->forum_comment_id; ?>">
                         <div class="form-group">

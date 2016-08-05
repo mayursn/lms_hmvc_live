@@ -133,22 +133,28 @@ $degree =$this->Degree_model->order_by_column('d_name');
                 start_date: "required",
                 end_date: "required",
                 expiry_date: "required",
-                penalty: "required"
+                penalty:  {
+                    required: true,
+                    currency: ['$', false]
+                },
             },
             messages: {
-                degree: "Please select department",
-                course: "Please select branch",
-                semester: "Please select semester",
-                batch: "Please select batch",
+                degree: "Select department",
+                course: "Select branch",
+                semester: "Select semester",
+                batch: "Select batch",
                 fees: {
-                    required: "Please Enter  Fee",
-                    currency: "Please Enter Valid Amount"
+                    required: "Enter  Fee",
+                    currency: "Enter Valid Amount"
                 },
-                title: "Please enter title",
-                start_date: "Please enter start date",
-                end_date: "Please enter end date",
-                expiry_date: "Please enter expiry date",
-                penalty: "Please enter penalty"
+                title: "Enter title",
+                start_date: "Enter start date",
+                end_date: "Enter end date",
+                expiry_date: "Enter expiry date",
+                penalty: {
+                    required: "Enter  penalty",
+                    currency: "Enter Valid Amount"
+                },
             }
         });
     });
@@ -255,26 +261,20 @@ $("#batch").change(function () {
             format: js_date_format,
             todayHighlight: true,
             autoclose: true,
-            startDate: new Date()
+            startDate: new Date(),
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+        $('#end_date').datepicker('setStartDate', minDate);
         });
-        $('#start_date').on('change', function () {
-            
-            date = new Date($(this).val());
-            start_date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-            console.log(start_date);
-            
-            setTimeout(function () {
-                $("#end_date").datepicker({
+        $("#end_date").datepicker({
                     format: js_date_format,
                     autoclose: true,
-                    todayHighlight: true,
-                    startDate: start_date
+                    todayHighlight: true                  
                 }).on('changeDate', function (selected) {
-            var minDate = new Date(selected.date.valueOf());
-            $('#expiry_date').datepicker('setStartDate', minDate);
+                        var minDate = new Date(selected.date.valueOf());
+                    $('#expiry_date').datepicker('setStartDate', minDate);
         });
-            }, 200);
-        });
+        
           
            $("#expiry_date").datepicker({
                     format: js_date_format,

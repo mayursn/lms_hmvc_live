@@ -21,7 +21,7 @@
                         <?php foreach ($report as $row) { ?>
                             <tr>
                                 <td><?php echo $counter++; ?></td>
-                                <td><?php echo date('d-m-Y', strtotime($row->date_taken)); ?></td>
+                                <td><?php echo date_formats($row->date_taken); ?></td>
                                 <td>
                                     <?php echo date('h:i A', strtotime($row->Start)) . ' - ' . date('h:i A', strtotime($row->End)); ?>
                                 </td>

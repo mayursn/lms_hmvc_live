@@ -16,7 +16,7 @@ $edit_data = $this->db->get_where('fees_structure', array('fees_structure_id' =>
                     <label class="col-sm-4 control-label"><?php echo ucwords("Title"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">
                         <input type="text" id="edit_title" name="title" class="form-control"
-                               value="<?php echo $edit_data->title; ?>" required=""/>
+                               value="<?php echo $edit_data->title; ?>" />
                     </div>
                 </div>                  
                   <div class="form-group">
@@ -134,7 +134,7 @@ $edit_data = $this->db->get_where('fees_structure', array('fees_structure_id' =>
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo ucwords("Fee"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">                                        
-                        <input type="text" id="edit_fees" class="form-control" name="fees" required=""
+                        <input type="text" id="edit_fees" class="form-control" name="fees" 
                                value="<?php echo $edit_data->total_fee; ?>"/>                                               
                     </div>
                 </div>	
@@ -196,28 +196,40 @@ $edit_data = $this->db->get_where('fees_structure', array('fees_structure_id' =>
     $(document).ready(function () {
         $("#editfeesstructure").validate({
             rules: {
-                edit_title: "required",
+                title: "required",
                 degree: "required",
                 course: "required",
                 edit_batch: "required",
                 semester: "required",
-                edit_fees: "required",
+                fees: {
+                    required: true,
+                    currency: ['$', false]
+                },
                 start_date: "required",
                 end_date: "required",
                 expiry_date: "required",
-                penalty: "required"
+                penalty: {
+                    required: true,
+                    currency: ['$', false]
+                }
             },
             messages: {
-                edit_title: "Please enter title",
-                degree: "Please select department",
-                course: "Please select branch",
-                edit_batch: "Please select batch",
-                semester: "Please select semester",
-                edit_fees: "Please enter fee",
-                start_date: "Please enter start date",
-                end_date: "Please enter end date",
-                expiry_date: "Please enter expiry date",
-                penalty: "Please enter penalty"
+               title: "Enter title",
+                degree: "Select department",
+                course: "Select branch",
+                edit_batch: "Select batch",
+                semester: "Select semester",
+                fees: {
+                    required: " Enter  Fee",
+                    currency: "Enter Valid Amount"
+                },
+                start_date: "Enter start date",
+                end_date: "Enter end date",
+                expiry_date: "Enter expiry date",
+                penalty: {
+                    required: " Enter  penalty",
+                    currency: "Enter Valid Amount"
+                }
             }
         });
     });
@@ -318,41 +330,34 @@ $edit_data = $this->db->get_where('fees_structure', array('fees_structure_id' =>
 
 </script>
 
-<script>
-    $(document).ready(function () {  
-         var js_date_format = '<?php echo js_dateformat(); ?>';
-         $("#edit_start_date").datepicker({
+<script>    
+     $(document).ready(function () {
+        var js_date_format = '<?php echo js_dateformat(); ?>';
+        $("#edit_start_date").datepicker({
             format: js_date_format,
             todayHighlight: true,
             autoclose: true,
-            startDate: new Date()
+            startDate: new Date(),
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+        $('#edit_end_date').datepicker('setStartDate', minDate);
         });
-        $('#edit_start_date').on('change', function () {
-            
-            date = new Date($(this).val());
-            start_date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-            console.log(start_date);
-            
-            setTimeout(function () {
-                $("#edit_end_date").datepicker({
+        $("#edit_end_date").datepicker({
                     format: js_date_format,
                     autoclose: true,
-                    todayHighlight: true,
-                    startDate: start_date
+                    todayHighlight: true                  
                 }).on('changeDate', function (selected) {
-            var minDate = new Date(selected.date.valueOf());
-            $('#edit_expiry_date').datepicker('setStartDate', minDate);
+                        var minDate = new Date(selected.date.valueOf());
+                    $('#edit_expiry_date').datepicker('setStartDate', minDate);
         });
-            }, 200);
-        });
-          
+                  
            $("#edit_expiry_date").datepicker({
                     format: js_date_format,
                     autoclose: true,
                     todayHighlight: true
                 });
-
-    })
+        
+    });
     //minDate: new Date(),
 
 </script>

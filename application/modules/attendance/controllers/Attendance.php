@@ -19,6 +19,10 @@ class Attendance extends MY_Controller {
         $this->load->model('classes/Class_model');
         $this->load->model('student/Student_model');
         $this->load->model('professor/Professor_model');
+        if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
       
     }
 
@@ -51,6 +55,7 @@ class Attendance extends MY_Controller {
      */
     function take_class_routine_attendance() {
         if ($_POST) {
+           
             $this->load->model('admin/Crud_model');
             $student = $this->Student_model->get_many_by(array(
                     'std_degree' => $_POST['department'],
@@ -61,7 +66,7 @@ class Attendance extends MY_Controller {
                 ));                    
             foreach ($student as $row) {
                 $date = date('Y-m-d', strtotime($_POST['date']));
-                $status = $this->Attendance_model->get(array(
+                $status = $this->Attendance_model->get_by(array(
                             'department_id' => $_POST['department'],
                             'branch_id' => $_POST['branch'],
                             'batch_id' => $_POST['batch'],
@@ -71,6 +76,7 @@ class Attendance extends MY_Controller {
                             'date_taken' => $date,
                             'student_id' => $row->std_id
                         ));
+                
                 //check for existing attendnace
                 if ($status) {
                     //update existing attendance of the student

@@ -53,14 +53,15 @@
                         <div class="widget-section-title"><h6 style="color:#fff !important">NewsLetter</h6></div>
                         <p>Subscribe to out newsletter. We do not spam. We promise</p>
                         <div class="cs-form">
-                            <p class="hidden" id="subscribe-notification"></p>
                             <div class="input-holder">
                                 <i class="icon-envelope3"></i>
-                                <input id="email" type="email" required="" placeholder="example@email.com">
+                                <input id="email" name="email" type="email" required="" placeholder="example@email.com">
+                              
                                 <label>
                                     <input id="subscribe" type="submit" value="Subscribe" class="cs-bgcolor">
                                 </label>
                             </div>
+                             <label id="email-error" class="error" for="email"></label>
                         </div>
                     </div>
                 </div>
@@ -99,11 +100,9 @@
         $('#subscribe').on('click', function () {
             var email_address = $('#email').val();
             if (email_address == '') {
-                $('#subscribe-notification').attr('class', '');
-                $('#subscribe-notification').html('Please enter email address');
+                $('#email-error').html('Please enter email address');
             } else if (!isValidEmailAddress(email_address)) {
-                $('#subscribe-notification').attr('class', '');
-                $('#subscribe-notification').html('Please enter valid email address');
+                $('#email-error').html('Please enter valid email address');
             } else {
                 var form_data = {
                     email: email_address
@@ -113,8 +112,7 @@
                     type: 'post',
                     data: form_data,
                     success: function (content) {
-                        $('#subscribe-notification').attr('class', '');
-                        $('#subscribe-notification').html(content);
+                        $('#email-error').html(content);
                     }
                 });
             }

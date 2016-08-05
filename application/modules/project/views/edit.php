@@ -160,20 +160,19 @@ $row = $this->Project_manager_model->get($param2);
                                     <div id="student2">
                                         <?php
                                         $stu = explode(',', $row->pm_student_id);
-
-                                        $datastudent = $this->Student_model->get_many_by( array(
-                                                    'std_degree' => $row->pm_degree,
+                                      $datastudent = $this->Student_model->get_many_by( array(
+                                                     'std_status' => 1,
+                                            'std_degree' => $row->pm_degree,
                                                     'course_id' => $row->pm_course,
                                                     'std_batch' => $row->pm_batch,
                                                     'semester_id' => $row->pm_semester,
-                                                    'class_id' => $row->class_id));
-
+                                                    'class_id' => $row->class_id));  
                                         foreach ($datastudent as $rowstu) {
                                             if (in_array($rowstu->std_id, $stu)) {
                                                 ?>
-                                                <div class="checkedstudent"> <input type="checkbox" name="student[]" value="<?php echo $rowstu->std_id; ?>" checked=""><?php echo $rowstu->std_first_name . '&nbsp' . $rowstu->std_last_name; ?> </div>                                               
+                                        <div class="checkedstudent"> <input class="checkbox1" type="checkbox" name="student[]" value="<?php echo $rowstu->std_id; ?>" onclick="uncheck();" checked="checked"  ><?php echo $rowstu->std_first_name . '&nbsp' . $rowstu->std_last_name; ?> </div>                                               
                                             <?php } else { ?>
-                                                <div class="checkedstudent"><input type="checkbox" name="student[]" value="<?php echo $rowstu->std_id; ?>" ><?php echo $rowstu->std_first_name . '&nbsp' . $rowstu->std_last_name; ?></div>
+                                                <div class="checkedstudent"><input class="checkbox1" type="checkbox" name="student[]" value="<?php echo $rowstu->std_id; ?>" onclick="uncheck();" ><?php echo $rowstu->std_first_name . '&nbsp' . $rowstu->std_last_name; ?></div>
                                                 <?php
                                             }
                                         }
@@ -224,6 +223,27 @@ $row = $this->Project_manager_model->get($param2);
             </div>
         </div>
     </div>
+<script type="text/javascript">function uncheck()
+    {
+      
+        if ($('.checkbox1:checked').length == $('.checkbox1').length) {
+            $('#checkAll2').prop('checked', true);
+        } else {
+            $('#checkAll2').prop('checked', false);
+        }
+    }</script>
+<script>
+       $(document).ready(function () {
+        if($(".checkbox1:checked").length==$(".checkbox1").length)
+            {
+                 $('#checkAll2').attr('checked', true);
+            }
+            else
+            {
+                $('#checkAll2').attr('checked', false);   
+            }
+        });        
+</script>
 
 <script type="text/javascript">
 
@@ -386,6 +406,7 @@ $row = $this->Project_manager_model->get($param2);
     });
 
     $().ready(function () {
+        
         var js_date_format = '<?php echo js_dateformat(); ?>';
         $("#dateofsubmission1").datepicker({
             format: js_date_format, startDate: new Date(),
@@ -414,7 +435,7 @@ $row = $this->Project_manager_model->get($param2);
                             required: true,
                             url: true,
                         },
-                projectfile: {
+                'projectfile[]': {
                     extension: 'gif|jpg|png|pdf|xlsx|xls|doc|docx|ppt|pptx|pdf|txt|zip|rar',
                 },
                 title:
@@ -434,7 +455,7 @@ $row = $this->Project_manager_model->get($param2);
                         {
                             required: "Enter page url",
                         },
-                projectfile: {
+                'projectfile[]': {
                     extension: 'Upload valid file!',
                 },
                 title:
@@ -445,11 +466,3 @@ $row = $this->Project_manager_model->get($param2);
         });
     });
 </script>
-<script type="text/javascript">function uncheck()
-    {
-        if ($('.checkbox1:checked').length == $('.checkbox1').length) {
-            $('#select_all').prop('checked', true);
-        } else {
-            $('#select_all').prop('checked', false);
-        }
-    }</script>

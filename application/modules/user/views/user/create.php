@@ -43,7 +43,7 @@ $roles = $this->db->where_not_in('role_name', array('Student', 'Professor'))->or
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Password</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" value="" name="password" id="password"/>
+                                <input type="password" class="form-control" value="12345" readonly="" name="password" id="password"/>
                             </div>	
                         </div>
                         <div class="form-group">
@@ -120,12 +120,40 @@ $roles = $this->db->where_not_in('role_name', array('Student', 'Professor'))->or
 
         $("#user-create-form").validate({
             rules: {
-                role_name: "required",
-                status: "required",
+                first_name: "required",
+                last_name: "required",
+                email: {
+                            required: true,
+                            email: true,
+                            remote: {
+                                url: "<?php echo base_url(); ?>user/check_user_email",
+                                type: "post",
+                                data: {
+                                     email: function () {
+                                        return $("#email").val();
+                                    },
+                                }
+                            }
+                        },
+                mobile: "required",
+                phone: "required",
+                city: "required",
+                zip_code: "required",
+                role: "required",
             },
             messages: {
-                role_name: "Enter role name",
-                status: "Select status",
+                 first_name: "Enter first name",
+                last_name: "Enter last name",
+                email: {
+                    required: "Enter email id",
+                    email: "Enter valid email id",
+                    remote: "Email id already exists",
+                },
+                mobile: "Enter mobile no",
+                phone: "Enter phone",
+                city: "Enter city",
+                zip_code: "Enter zip code",
+                role: "Select role",
             }
         });
     });

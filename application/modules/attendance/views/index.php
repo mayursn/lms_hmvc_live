@@ -44,6 +44,7 @@
                                         <thead>
                                             <tr>
                                                 <td>No</td>
+                                                <td>Title</td>
                                                 <th>Department</th>
                                                 <th>Branch</th>
                                                 <th>Semester</th>
@@ -62,6 +63,7 @@
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $counter++; ?></td>
+                                                    <td><?php echo $routine->Title; ?></td>
                                                     <td><?php echo $routine->d_name; ?></td>
                                                     <td><?php echo $routine->c_name; ?></td>
                                                     <td><?php echo $routine->s_name; ?></td>

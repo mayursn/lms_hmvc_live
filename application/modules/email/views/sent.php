@@ -31,7 +31,7 @@
                                         <?php
                                         $user_ids = explode(',', $row->email_to);
                                         if(count($user_ids) > 1) {
-                                            $user = $this->user_model->get($user_ids[0]);
+                                            $user = $this->User_model->get($user_ids[0]);
                                             echo $user->first_name . ' ' . $user->last_name . '...';
                                         } else {
                                             $user = $this->User_model->get($row->email_to);

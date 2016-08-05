@@ -218,7 +218,7 @@
             var batch_id = $('#search-batch').val();
             var semester_id = $('#search-semester').val();
             $.ajax({
-                url: '<?php echo base_url(); ?>payment/student_fee_structure/' + degree_id + '/' + course_id + '/' +
+                url: '<?php echo base_url(); ?>payment/fee_structure_filter_list/' + degree_id + '/' + course_id + '/' +
                         batch_id + '/' + semester_id,
                 type: 'get',
                 success: function (content) {

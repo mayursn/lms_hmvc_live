@@ -75,6 +75,7 @@ $delete = delete_permission($permission, 'Class_Routine');
                     </div>
                 </form>  
                  </div>
+               
                 <script>
                     $(document).ready(function () {
                         $('#department_search').val('<?php echo $this->session->userdata('filter_data')['DepartmentID']; ?>');

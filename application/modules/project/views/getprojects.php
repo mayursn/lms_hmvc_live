@@ -23,7 +23,7 @@ $delete = delete_permission($permission, 'Project');
                 <th>Date of submission</th>			
                 <?php if($update || $delete){ ?>
                 <th>Action</th>	
-                <?php } ?>
+                 <?php } ?>
             </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@ $delete = delete_permission($permission, 'Project');
                         }
                         if (count($stu) > 2) {
                             ?>
-                            <a onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/view_student_name/<?php echo $row->pm_id; ?>');" style="cursor:pointer; text-decoration: none;">Read More</a>
+                            <a onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_studentname/<?php echo $row->pm_id; ?>');" style="cursor:pointer; text-decoration: none;">Read More</a>
                             <?php
                         }
                         ?>
@@ -139,7 +139,6 @@ $delete = delete_permission($permission, 'Project');
         $('#data-tables').dataTable({"language": {"emptyTable": "No data available"}});
     });   
 </script>
-
 <?php } ?>
     <?php
 }
@@ -227,6 +226,9 @@ if ($param == 'submitted') {
         </tbody>
     </table>
 
+
+<script type="text/javascript">
+    
 <script type="text/javascript">  
     $(document).ready(function () {
         "use strict";
@@ -234,3 +236,4 @@ if ($param == 'submitted') {
     });
 </script>
 <?php } ?>
+

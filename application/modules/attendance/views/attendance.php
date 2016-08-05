@@ -10,24 +10,31 @@
                         <h4>Class Routine Details</h4>
                         <table class="table table-condensed ex1">
                             <tr>
-                                <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Department</strong></td>
+                                <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Title</strong></td>
+                                <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $class_routine_details->Title; ?></td>
+                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Department</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $department_name; ?></td>
+                                
+                            </tr>
+                            <tr>
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Branch</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $branch_name; ?></td>
-                            </tr>
-                            <tr>
+                          
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Semester</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $semester_name; ?></td>
+                               </tr>
+                            <tr>
+                                
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Class</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $class_name_detail; ?></td>
-                            </tr>
-                            <tr>
+                            
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Subject</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo $subject_name; ?></td>
+                               </tr>
+                            <tr>
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Date</strong></td>
                                 <td class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><?php echo date('M d, Y', strtotime($date)); ?></td>
-                            </tr>
-                            <tr>
+                           
                                 <td class="col-lg-2 col-md-2 col-sm-4 col-xs-4"><strong>Time</strong></td>
                                 <td colspan="3" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <?php echo date('h:i A', strtotime($start_time)) . ' - ' . date('h:i A', strtotime($end_time)); ?>

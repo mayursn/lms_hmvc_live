@@ -32,6 +32,7 @@ class MY_Controller extends MX_Controller {
         if ($this->session->userdata('last_activity')) {
             user_activity();
         }
+        //$this->output->enable_profiler(TRUE);
     }
 
     /**

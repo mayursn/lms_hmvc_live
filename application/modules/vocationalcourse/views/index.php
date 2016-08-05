@@ -37,6 +37,7 @@ if($this->session->userdata('role_name')!='Student')
                             <th><?php echo ucwords("course fee"); ?></th>
                             <th><?php echo ucwords("professor name"); ?></th>
                             <th>Status</th>
+                            
                             <?php if ($update || $delete) { ?>
                                     <th>Actions</th>
                                 <?php } ?> 
@@ -76,8 +77,8 @@ if($this->session->userdata('role_name')!='Student')
                                         <span  class="label label-danger mr6 mb6" >InActive</span>
                                     <?php } ?>
                                 </td>
-                                <td class="menu-action">
-                                    <?php if ($update || $delete) { ?>
+                                 <?php if ($update || $delete) { ?>
+                                <td class="menu-action">                                   
                                      <?php 
                                             if($update) { ?>
                                     <a href="#" onclick="showAjaxModal('<?php echo base_url();?>modal/popup/vocationalcourse_edit/<?php echo $row->vocational_course_id;?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-primary mr6 mb6"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</span></a>
@@ -86,9 +87,10 @@ if($this->session->userdata('role_name')!='Student')
                                 if($delete) { ?>
                                     <a href="#" onclick="confirm_modal('<?php echo base_url(); ?>vocationalcourse/delete/<?php echo $row->vocational_course_id; ?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-danger mr6 mb6"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</span></a>
                                       <?php } ?>
-                                    <?php } ?>
+                                   
                                     <a href="#" onclick="showAjaxModal('<?php echo base_url();?>vocationalcourse/vocational_registered_student/<?php echo $row->vocational_course_id;?>');" data-toggle="tooltip" data-placement="top" ><span class="label label-primary mr6 mb6"><i class="fa fa-desktop" aria-hidden="true"></i>Registered Student</span></a>
                                 </td>
+                                 <?php } ?>
                             </tr>
                         <?php endforeach; ?>																				
                     </tbody>
@@ -107,7 +109,7 @@ if($this->session->userdata('role_name')!='Student')
 <!-- End #content -->
 <?php
 }
-elseif($this->session->userdata('role_name')=="Student")
+else
 {
    ?>
 <div class=row>                      
@@ -122,7 +124,7 @@ elseif($this->session->userdata('role_name')=="Student")
                             <a href="#course-list" data-toggle="tab" aria-expanded="true">Vocational Course List</a>
                         </li>
                         <li class="">
-                            <a href="#submitted-course-list" data-toggle="tab" aria-expanded="false">Submitted Vocational Course List</a>
+                            <a href="#submitted-course-list" data-toggle="tab" aria-expanded="false">Registered Vocational Course List</a>
                         </li>
                     </ul>
                     <div id="import-tab-content" class="tab-content">
@@ -268,6 +270,8 @@ elseif($this->session->userdata('role_name')=="Student")
 ?>
 <script>
 $(document).ready(function(){
-    $('#vocational-course-list').DataTable({});
+    $('#vocational-course-list').DataTable();
+    $('#student-course-list').DataTable();
+    $('#register-course-list').DataTable();
 });
 </script>

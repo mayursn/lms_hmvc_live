@@ -13,6 +13,10 @@ class Email extends MY_Controller {
         parent::__construct();
         $this->load->helper('email/system_email');
         $this->load->model('email/Email_model');
+        if(!$this->session->userdata('user_id'))
+        {
+            redirect(base_url().'user/login');
+        }
     }
 
     function index() {
@@ -124,8 +128,8 @@ class Email extends MY_Controller {
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'mayur.ghadiya@searchnative.in',
-            'smtp_pass' => 'the mayurz97375',
+            'smtp_user' => 'mayur.panchal@searchnative.in',
+            'smtp_pass' => 'Mayur@@123',
             'mailtype' => 'html',
             'charset' => 'iso-8859-1'
         );

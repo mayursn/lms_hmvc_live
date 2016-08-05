@@ -3,15 +3,7 @@
     <div class=col-lg-12>
         <!-- col-lg-12 start here -->
         <div class="panel-default toggle panelMove panelClose panelRefresh">
-            <!-- Start .panel -->
-            <!--            <div class=panel-heading>
-                            <h4 class=panel-title><?php echo $title; ?></h4>
-                            <div class="panel-controls panel-controls-right">
-                                <a class="panel-refresh" href="#"><i class="fa fa-refresh s12"></i></a>
-                                <a class="toggle panel-minimize" href="#"><i class="fa fa-plus s12"></i></a>
-                                <a class="panel-close" href="#"><i class="fa fa-times s12"></i></a>
-                            </div>
-                        </div>-->
+         
             <div class=panel-body>
                 <form class="form-horizontal form-groups-bordered validate" 
                       action="<?php echo base_url('payment/pay_online'); ?>" id="student_fees" method="post">
@@ -47,7 +39,7 @@
                                         <label class="col-sm-3 control-label">Date</label>
                                         <div class="col-sm-9">
                                             <div>
-                                                <?php $date = date('d-m-Y'); ?>
+                                                <?php $date = date('m-d-Y'); ?>
                                                 <input value="<?php echo date_formats($date); ?>" type="text" id="datepicker-normal" name="date" class="form-control"/>
                                             </div>
                                         </div>
@@ -97,12 +89,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+<!--                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">Due Fees</label>
                                         <div class="col-sm-9">
                                             <input type="text" readonly="" id="due_fees" name="due_fees" class="form-control"/>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Amount</label>
@@ -189,19 +181,19 @@
                     }
                 });
 
-                $.ajax({
-                    url: '<?php echo base_url(); ?>fees/course_semester_paid_fee/' + fees_structure_id,
-                    type: 'get',
-                    success: function (content) {
-                        var total_paid_amount = jQuery.parseJSON(content);
-                        var due_amount = Number($('#total_fees').val());
-                        if (total_paid_amount > 0) {
-                            due_amount = Number($('#total_fees').val()) - total_paid_amount;
-                        }
-                        $('#due_fees').val(Math.abs(total_fee));
-                        due_fee = due_amount;
-                    }
-                });
+//                $.ajax({
+//                    url: '<?php echo base_url(); ?>fees/course_semester_paid_fee/' + fees_structure_id,
+//                    type: 'get',
+//                    success: function (content) {
+//                        var total_paid_amount = jQuery.parseJSON(content);
+//                        var due_amount = Number($('#total_fees').val());
+//                        if (total_paid_amount > 0) {
+//                            due_amount = Number($('#total_fees').val()) - total_paid_amount;
+//                        }
+//                        $('#due_fees').val(Math.abs(total_fee));
+//                        due_fee = due_amount;
+//                    }
+//                });
             }, 1500);
 
             setTimeout(function () {
@@ -225,26 +217,41 @@
     $().ready(function () {
         $("#student_fees").validate({
             rules: {
-                //title:{required: true},
                 date: "required",
                 semester: "required",
-                fees_structure: "required",
+                fees_structure: 
+                         {
+                            required: true,
+                            remote: {
+                                url: "<?php echo base_url(); ?>fees/check_student_paidfee",
+                                type: "post",
+                                data: {
+                                     fees_structure: function () {
+                                        return $("#fees_structure").val();
+                                    },
+                                     student_id: function () {
+                                        return <?php echo $this->session->userdata('std_id');?>;
+                                    },
+                                }
+                            }
+                        },
                 amount: {
                     required: true,
                     number: true,
-                    //max: $('#due_fees').val()
                 },
                 method: "required",
             },
             messages: {
-                //title: "Title is required",
                 date: "Date is required",
                 semester: "Semester is required",
-                fees_structure: "Fees structure is required",
+                fees_structure: 
+                    {
+                    required: "Select fee",
+                    remote: "You are already paid this fee",
+                },
                 amount: {
                     required: "Amount is required",
                     number: "Only enter number",
-                    //max: "Enter amount which is less than or due amount"
                 },
                 method: "Method is required",
             }

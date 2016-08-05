@@ -25,7 +25,7 @@
                             ?>
                             <tr>
                                 <td><?php echo $count++; ?></td>                                                                
-                                <td><?php echo $row->name; ?></td>
+                                <td><?php echo $row->std_first_name.' '.$row->std_last_name; ?></td>
                                 <td><?php echo $row->d_name; ?></td>
                                 <td><?php echo $row->c_name; ?></td>
                                 <td><?php echo $row->s_name; ?></td>
