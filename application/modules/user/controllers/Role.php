@@ -111,7 +111,7 @@ class Role extends MY_Controller {
                 $query="select * from modules where ";
                 foreach($modules as $m)
                 {
-                    $query .= "module_id= ".$m." or ";
+                    $query .= "is_active='1' AND module_id= ".$m." or ";
                 }
                  $query = rtrim($query, ' or');
 
