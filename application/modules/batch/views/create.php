@@ -25,14 +25,13 @@ $semesters = $this->db->get('semester')->result_array();
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("batch name"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="b_name" id="b_name"/>
+                                <input type="text" class="form-control" name="b_name" id="b_name" value="" />
                             </div>
                         </div>	
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("department"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select id="degree" name="degree[]" class="form-control" multiple required="">
-                                    <option value="">Select</option>
+                                <select id="degree" name="degree[]" required="required" class="form-control" multiple>                                   
                                     <?php foreach ($degree as $srow) { ?>
                                         <option value="<?php echo $srow['d_id']; ?>"><?php echo $srow['d_name']; ?>
                                         </option>
@@ -43,8 +42,8 @@ $semesters = $this->db->get('semester')->result_array();
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("branch"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select id="course" name="course[]" class="form-control" multiple  required="">
-                                    <option value="">Select</option>
+                                <select id="course"  required="required"  name="course[]" class="form-control" multiple >
+
                                 </select>
                             </div>	
                         </div>

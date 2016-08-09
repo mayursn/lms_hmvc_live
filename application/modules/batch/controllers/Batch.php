@@ -30,13 +30,23 @@ class Batch extends MY_Controller {
     
     function create()
     {
+        if($_POST)
+        {
+            if(!empty($_POST['b_name']) && !empty($_POST['degree']) && !empty($_POST['course']))    
+            {
                 $data['b_name'] = $this->input->post('b_name');
                 $data['degree_id'] = implode(',', $this->input->post('degree'));
                 $data['course_id'] = implode(',', $this->input->post('course'));
                 $data['b_status'] = $this->status($this->input->post('batch_status'));
                 $data['created_date'] = date('Y-m-d');
                 $this->Batch_model->insert($data);
-        $this->flash_notification("Batch successfully added");
+                $this->flash_notification("Batch successfully added");
+            }
+            else{
+                $this->flash_notification("Enter required field");
+            }
+        
+        }
         redirect(base_url() . 'batch/', 'refresh');
     }
     

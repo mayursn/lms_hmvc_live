@@ -588,8 +588,7 @@ $delete = delete_permission($permission, 'Assignment');
                     var subject_search = $("#filter_subject").val();
                     var semester = $("#filter_semester").val();
                     var divclass = $("#filter_class").val();
-                    var filter_assign = $("#filter_assign").val();  
-                    alert(subject_search);
+                    var filter_assign = $("#filter_assign").val();              
                     $.ajax({
                         url: '<?php echo base_url(); ?>assignment/getassignment/notsubmitted',
                         type: 'post',
