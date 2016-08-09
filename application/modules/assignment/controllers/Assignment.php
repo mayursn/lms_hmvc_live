@@ -272,9 +272,9 @@ class Assignment extends MY_Controller {
             $assign_id = $this->input->post("assign_id");
             if(!empty($degree) && !empty($course) && !empty($subject) && !empty($semester) && !empty($class) && !empty($assign_id))
             {
-            $this->data['not_submitted'] = $this->Assignment_submission_model->not_submitted_subject_assignment($course, $subject, $degree, $semester, $class, $assign_id);
-            $this->data['param'] = $param;
-            $this->data['assign_id'] = $assign_id;
+                $this->data['not_submitted'] = $this->Assignment_submission_model->not_submitted_subject_assignment($course, $subject, $degree, $semester, $class, $assign_id);
+                $this->data['param'] = $param;
+                $this->data['assign_id'] = $assign_id;
             }
             else{
                 $this->data['param'] = '';

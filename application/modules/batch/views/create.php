@@ -31,8 +31,8 @@ $semesters = $this->db->get('semester')->result_array();
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("department"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select id="degree" name="degree[]" class="form-control" multiple>
-                                   
+                                <select id="degree" name="degree[]" class="form-control" multiple required="">
+                                    <option value="">Select</option>
                                     <?php foreach ($degree as $srow) { ?>
                                         <option value="<?php echo $srow['d_id']; ?>"><?php echo $srow['d_name']; ?>
                                         </option>
@@ -43,8 +43,8 @@ $semesters = $this->db->get('semester')->result_array();
                         <div class="form-group">
                             <label class="col-sm-4 control-label"><?php echo ucwords("branch"); ?><span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select id="course" name="course[]" class="form-control" multiple>
-
+                                <select id="course" name="course[]" class="form-control" multiple  required="">
+                                    <option value="">Select</option>
                                 </select>
                             </div>	
                         </div>

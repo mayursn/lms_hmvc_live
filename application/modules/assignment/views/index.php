@@ -585,14 +585,15 @@ $delete = delete_permission($permission, 'Assignment');
 
                    var degree = $("#filter_department").val();
                     var course = $("#filter_branch").val();
-                    var batch = $("#filter_batch").val();
+                    var subject_search = $("#filter_subject").val();
                     var semester = $("#filter_semester").val();
                     var divclass = $("#filter_class").val();
-                    var filter_assign = $("#filter_assign").val();                   
+                    var filter_assign = $("#filter_assign").val();  
+                    alert(subject_search);
                     $.ajax({
                         url: '<?php echo base_url(); ?>assignment/getassignment/notsubmitted',
                         type: 'post',
-                        data: {'degree': degree, "course": course, "batch": batch, "semester": semester, 'divclass': divclass,'assign_id':filter_assign},
+                        data: {'degree': degree, "course": course, "subject": subject_search, "semester": semester, 'divclass': divclass,'assign_id':filter_assign},
                         success: function (content) {
                            
                             $("#get_not_submitted").html(content);
