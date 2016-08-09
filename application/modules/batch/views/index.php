@@ -33,10 +33,12 @@ $delete = delete_permission($permission, 'Batch');
 
                     <tbody>
                         <?php
+                        $i = 1;
                         foreach ($batches as $row):
                             ?>
                             <tr>
-                                <td></td>
+                                <td><?php echo $i; 
+                                $i++; ?></td>
                                 <td><?php echo $row['b_name']; ?></td>    
                                <td hidden> <?php
                                     $explodedegree = explode(',', $row['degree_id']);
