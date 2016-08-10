@@ -278,7 +278,12 @@ if($this->session->userdata('role_name')=='Student')
 <script>
 
     $(document).ready(function () {
-      
+         jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, ""); 
+                return this.optional(element) || phone_number.length > 9 &&
+                        phone_number.match(/^[0-9]{3}[0-9]{3}[0-9]{4}$/);
+        }, "Please specify a valid phone number");
+        
         $("#frmchangepassword").validate({
             rules: {
                 password: 
@@ -326,7 +331,10 @@ if($this->session->userdata('role_name')=='Student')
                 lname: "required",
                 email: "required",
                 gender: "required",
-                mobile: "required",
+                mobile: {
+                            required: true,
+                            phoneUS: true,
+                        },
                 city: "required",
                 zip: "required",
             },
@@ -335,7 +343,10 @@ if($this->session->userdata('role_name')=='Student')
                 lname: "Enter last name",
                 email: "Enter email",
                 gender: "Select gender",
-                mobile: "Enter mobile no",
+                mobile: {
+                        required: "Enter mobile no",
+                        phoneUS: "Enter valid mobile number",
+                    },
                 city: "Enter city",
                 zip: "Enter zip",
             }

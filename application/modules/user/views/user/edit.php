@@ -124,7 +124,7 @@ $user = $this->User_model->with('role')->get($param2);
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-info vd_bg-green" ><?php echo ucwords("add"); ?></button>
+                                <button type="submit" class="btn btn-info vd_bg-green" ><?php echo ucwords("update"); ?></button>
                             </div>
                         </div>
                         </form>               

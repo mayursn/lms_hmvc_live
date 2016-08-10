@@ -32,10 +32,7 @@ $semester = explode(',', $edit_data->semester_id);
 $this->db->where_in('s_id', $semester);
 $semester = $this->db->get('semester')->result();
 $subjects = $this->Subject_manager_model->subejct_list_branch_sem($course_id,$semester_id);
-       // $this->db->get_where('subject_manager',[
-  //  'sm_course_id'  => $course_id,
-   //'sm_sem_id' => $semester_id
-//])->result();
+ 
 ?>
 <div class="row">
 
@@ -124,7 +121,7 @@ $subjects = $this->Subject_manager_model->subejct_list_branch_sem($course_id,$se
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo ucwords("Date"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">
-                        <input readonly="" type="text" required=""  name="exam_date" class="form-control datepicker-normal-edit"
+                        <input readonly="" type="text" required="" id="exam_date"  name="exam_date" class="form-control datepicker-normal-edit"
                                value="<?php echo $edit_data->em_date; ?>"/>
                     </div>
                 </div>
@@ -142,10 +139,11 @@ $subjects = $this->Subject_manager_model->subejct_list_branch_sem($course_id,$se
                     <label class="col-sm-4 control-label"><?php echo ucwords("End Time"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">
                          <div class="input-group bootstrap-timepicker">
-                                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                        <input type="text" id="end_time" class="form-control" name="end_time"
+                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                            <input type="text" id="end_time" class="form-control" name="end_time"
                                value="<?php echo $edit_data->exam_end_time ?>" required=""/>
                          </div>
+                        <label id="end_time-error" class="error" for="end_time"></label>
                     </div>	
                 </div>
                 <div class="form-group">
@@ -168,6 +166,39 @@ $subjects = $this->Subject_manager_model->subejct_list_branch_sem($course_id,$se
             form.submit();
         }
     });
+     $( "#exam_date" ).focusin(function() {
+         $(this).prop('readonly', true);
+      });
+      $( "#exam_date" ).focusout(function() {
+         $(this).prop('readonly', false);
+      });
+      
+  var js_date_format = '<?php echo js_dateformat(); ?>';
+    $("#edit_exam").change(function(){
+    var id= $(this).val();
+    $('#exam_date').val('');
+    if(id!="")
+    {
+        $.ajax({
+              url: '<?php echo base_url(); ?>exam/getexam/'+id,
+              type: 'post',
+              dataType:'json',
+              success: function (content) {
+                  var startdate= new Date(content.em_date);
+                  var enddate= new Date(content.em_end_time);
+                    $("#exam_date").datepicker("remove");
+                    
+                  $('#exam_date').datepicker({
+                        format:js_date_format,
+                        autoclose: true,
+                        startDate: startdate,
+                        endDate:enddate,
+                    });
+              }
+          })
+    }
+})
+
 
     $(document).ready(function () {
          $('#start_time').timepicker({
@@ -232,14 +263,25 @@ $subjects = $this->Subject_manager_model->subejct_list_branch_sem($course_id,$se
 </script>
 
 <script type="text/javascript">
+      var exmarray=<?php echo json_encode($exam_list) ?>;
+      var startdate;
+      var enddate;
+        $.each(exmarray, function (key, value) {
+           if('<?php echo $edit_data->exam_id?>'== value.em_id)
+            {
+                startdate= new Date(value.em_date);
+                enddate= new Date(value.em_end_time);
+            }
+        });
+    
     $(function () {
-var js_date_format = '<?php echo js_dateformat(); ?>';
-        $(".datepicker-normal-edit").datepicker({
-            format: js_date_format, startDate : new Date(),
-            changeMonth: true,
-            changeYear: true,
+        var js_date_format = '<?php echo js_dateformat(); ?>';
+         $("#exam_date").datepicker("remove");
+            $('#exam_date').datepicker({
+            format: js_date_format,
+            startDate : startdate,
+            endDate:enddate,
             autoclose:true,
-
         });
     });
 </script>
@@ -249,7 +291,7 @@ var js_date_format = '<?php echo js_dateformat(); ?>';
     var subject_id = '<?php echo $edit_data->subject_id; ?>';
     var edit_degree = '<?php echo $edit_data->degree_id; ?>';
     var course_id = '<?php echo $edit_data->course_id; ?>';
-
+    
     function get_exam_list(course_id, semester_id) {
         var edit_degree = $("#edit_degree").val();
         var batch_id = $("#edit_batch").val();

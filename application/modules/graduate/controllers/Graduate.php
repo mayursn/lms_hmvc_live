@@ -82,13 +82,6 @@ class Graduate extends MY_Controller {
    
     }
 
-    function view($id) {
-        
-    }
-
-    function edit($id) {
-        
-    }
 
     /**
      * Delete Charity Fund
@@ -159,5 +152,14 @@ class Graduate extends MY_Controller {
 
         redirect(base_url('graduate'));
     }
-
+    function check_graduate()
+    {
+        $stdid=$this->input->post('student');
+        $data=$this->Graduates_model->get_by(array('student_id'=>$stdid));
+        if ($data) {
+                echo "false";
+            } else {
+                echo "true";
+            }
+    }
 }

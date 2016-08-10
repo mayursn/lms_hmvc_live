@@ -92,8 +92,9 @@ $department = $this->Degree_model->order_by_column('d_name');
                     <label class="col-sm-4 control-label"><?php echo ucwords("photo"); ?></label>
                     <div class="col-sm-8">
                         <input id="photo" class="form-control coverimage" type="file" name="userfile" accept="image/*"/>
-                    </div>	
                     <div id="image_container"></div>
+                    </div>	
+                    
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo ucwords("about"); ?></label>
@@ -238,7 +239,7 @@ $department = $this->Degree_model->order_by_column('d_name');
                     reader.readAsDataURL(file);
                     reader.onloadend = function (e) {
                         img_src = e.target.result;
-                        html = "<img class='img-thumbnail' style='width:300px;margin:20px;' src='" + img_src + "'>";
+                        html = "<img class='img-thumbnail' style='width:100px;margin:20px;' src='" + img_src + "'>";
                         $('#image_container').html(html);
                     };
                 }

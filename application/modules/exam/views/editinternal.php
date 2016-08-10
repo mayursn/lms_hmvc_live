@@ -61,7 +61,7 @@ $subject = $this->Subject_manager_model->subejct_list_branch_sem($edit_data->cou
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo ucwords("Total Marks"); ?><span style="color:red">*</span></label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" name="total_marks" id="total_marks"
+                        <input type="number" class="form-control" name="total_marks" id="total_marks" min="0"
                                value="<?php echo $edit_data->internal_marks; ?>"/>
                     </div>
                 </div>                

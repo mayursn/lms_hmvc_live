@@ -25,7 +25,8 @@
                     <div class="form-group">					
                         <label class="col-sm-4 control-label"><?php echo ucwords("Page Content"); ?><span style="color:red">*</span></label>
                         <div class="col-sm-8">		
-                            <textarea name="c_description" required="" class="form-control summernote" rows="3" required></textarea>
+                            <textarea name="c_description" class="form-control summernote"></textarea>
+                            <label class="error" generated="true" for="c_description"></label>
                         </div>														
                     </div> 
                     <div class="form-group">
@@ -57,16 +58,27 @@
             }
         });
         $().ready(function () {
+            jQuery.validator.addMethod("onlycharacter", function (value, element) {
+            return this.optional(element) || /^[A-z]+$/.test(value);
+        }, 'Please enter a valid character.');
+        
             $("#cmsform").validate({
                 //ignore: [],
                 rules: {
                     c_title: "required",
-                    c_slug: "required",
+                    c_slug: {
+                        required:true,
+                        onlycharacter:"",
+                    },
                     c_description: "required",
                 },
                 messages: {
                     c_title: "Enter title",
-                    c_slug: "Select slug",
+                    c_slug:
+                            {
+                                required:"Select slug",
+                                onlycharacter:"Enter valid slug",
+                            },
                     c_description: "Enter page content",
                 }
             });

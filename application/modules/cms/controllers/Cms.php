@@ -30,6 +30,7 @@ class Cms extends MY_Controller {
     {
         if($_POST)
         {
+          
               $data['c_title'] = $this->input->post('c_title');
                 $data['c_slug'] = $this->input->post('c_slug');
                 $data['c_description'] = $this->input->post('c_description');

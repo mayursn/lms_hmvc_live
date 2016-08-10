@@ -13,7 +13,7 @@
                     reader.readAsDataURL(file);
                     reader.onloadend = function (e) {
                         img_src = e.target.result;
-                        html = "<img class='img-thumbnail' style='width:300px;margin:20px;' src='" + img_src + "'>";
+                        html = "<img class='img-thumbnail' src='" + img_src + "'>";
                         $('#image_container1').html(html);
                     };
                 }
@@ -167,7 +167,13 @@ $students = $this->db->get_where('student', array(
             form.submit();
         }
     });
-
+    
+    $('#year').datepicker({
+        format: 'yyyy',
+        viewMode: 'years',
+        minViewMode: 'years'
+    });
+    
     $(document).ready(function () {
 
         $("#editgraduatesform").validate({

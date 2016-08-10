@@ -11,7 +11,7 @@
                     reader.readAsDataURL(file);
                     reader.onloadend = function (e) {
                         img_src = e.target.result;
-                        html = "<img class='img-thumbnail' style='width:300px;margin:20px;' src='" + img_src + "'>";
+                        html = "<img class='img-thumbnail' style='width:100px;margin:20px;' src='" + img_src + "'>";
                         $('#image_container').html(html);
                     };
                 }
@@ -82,9 +82,9 @@ $semesters = $this->db->get('semester')->result_array();
                     <div class="form-group">
                         <label class="col-sm-4 control-label"> Student Image <span style="color:red">*</span></label>
                         <div class="col-sm-8">
-                            <input id="main_img" class="form-control coverimage" type="file" name="main_img"  />
+                            <input id="main_img" class=" coverimage" type="file" name="main_img"  />
+                            <div id="image_container" ></div>
                         </div>
-                        <div id="image_container"></div>
                     </div>      
 
                     <div class="form-group">
@@ -122,7 +122,11 @@ $semesters = $this->db->get('semester')->result_array();
                 form.submit();
             }
         });
-
+ $('#year').datepicker({
+    format: 'yyyy',
+    viewMode: 'years',
+    minViewMode: 'years'
+});
 
         $(document).ready(function () {
 
@@ -132,7 +136,18 @@ $semesters = $this->db->get('semester')->result_array();
                     course: "required",
                     batch: "required",
                     semester: "required",
-                    student: "required",
+                    student:  {
+                            required: true,
+                            remote: {
+                                url: "<?php echo base_url(); ?>graduate/check_graduate",
+                                type: "post",
+                                data: {
+                                     student: function () {
+                                        return $("#student").val();
+                                    },
+                                }
+                            }
+                        },
                     main_img: {
                         required: true,
                         extension: "gif|jpg|png|jpeg"
@@ -145,7 +160,11 @@ $semesters = $this->db->get('semester')->result_array();
                     course: "Select branch",
                     batch: "Select batch",
                     semester: "Select semester",
-                    student: "Select student",
+                    student: 
+                        {
+                         required:"Select student",
+                         remote:"Student already exists",
+                        },
                     main_img: {
                         required: "Upload student image",
                         extension: "Only gif,jpg,png file is allowed!"

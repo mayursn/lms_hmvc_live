@@ -120,54 +120,16 @@
 </div></div>
 
 <script type="text/javascript">
+     $( "#exam_date" ).focusin(function() {
+         $(this).prop('readonly', true);
+      });
+      $( "#exam_date" ).focusout(function() {
+         $(this).prop('readonly', false);
+      });
     var js_date_format = '<?php echo js_dateformat(); ?>';
-//    $('#exam_date').datepicker({
-//        format:js_date_format,
-//        autoclose: true,
-//        startDate: new Date()
-//    });
 
 </script>
 
-<script type="text/javascript">
-
-//    $(document).ready(function () {
-//        $('#start_time').timepicker({
-//            upArrowStyle: 'fa fa-angle-up',
-//            downArrowStyle: 'fa fa-angle-down',
-//            minuteStep: 30
-//        });
-//        $('#end_time').timepicker({
-//            upArrowStyle: 'fa fa-angle-up',
-//            downArrowStyle: 'fa fa-angle-down',
-//            minuteStep: 30
-//        });
-//        $("#exam_time_table_form").validate({
-//            rules: {
-//                degree: "required",
-//                course: "required",
-//                batch: "required",
-//                semester: "required",
-//                exam: "required",
-//                subject: "required",
-//                exam_date: "required",
-//                start_time: "required",
-//                end_time: "required"
-//            },
-//            messages: {
-//                degree: "Please select department",
-//                course: "Please select branch",
-//                batch: "Please select batch",
-//                semester: "Please select semester",
-//                exam: "Please select exam",
-//                subject: "Please select subject",
-//                exam_date: "Please enter date",
-//                start_time: "Please enter start time",
-//                end_time: "Please enter end time"
-//            }
-//        });
-//    });
-</script>
 <script type="text/javascript">
  //   $('#exam_date').datepicker({format: js_date_format, autoclose: true});
 
