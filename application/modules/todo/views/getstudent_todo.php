@@ -11,7 +11,7 @@
             ?> value="<?php echo $todo->todo_id ?>" id="checkbox<?php echo $todo->todo_id ?>" class="taskstatus"><label for=checkbox1></label></div>               
         <div class=todo-task-text><?php echo $todo->todo_title; ?></div>
         <div class="todo-category"><i class="mar4top fa fa-calendar" aria-hidden="true"></i><?php echo date_duration($todo->todo_datetime); ?></div>
-        <div class="updateclick_box">
+        <div class="updateclick_box <?php if($todo->todo_status=='0') { ?> hidden <?php } ?>" id="getupdatecheck<?php echo $todo->todo_id; ?>">
             <button type=button class="updateclick" value="<?php echo $todo->todo_id; ?>"><i aria-hidden="true" class="fa fa-pencil-square-o"></i></button>
         </div>
         <div class="todo-close_box">
@@ -28,6 +28,7 @@
 
             $(this).closest('li.todo-task-item').addClass('task-done');
             var id = $(this).val(); // todo id
+            $('#getupdatecheck'+id).addClass('hidden');
             var dataString = "id=" + id + "&status=0";
             $.ajax({
                 type: "POST",
@@ -43,7 +44,7 @@
 
             var id = $(this).val(); // todo id
             var dataString = "id=" + id + "&status=1";
-
+            $('#getupdatecheck'+id).removeClass('hidden');
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>todo/changestatus",

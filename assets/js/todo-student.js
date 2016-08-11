@@ -97,7 +97,7 @@ jQuery('#addnewtodo').on('click', function (event) {
             $(this).closest('li.todo-task-item').addClass('task-done');
             var id = $(this).val(); // todo id
             var dataString = "id=" + id + "&status=0";
-
+            $('#getupdatecheck'+id).addClass('hidden');
             $.ajax({
                 type: "POST",
                 url: base_url+"todo/changestatus",
@@ -112,7 +112,7 @@ jQuery('#addnewtodo').on('click', function (event) {
 
             var id = $(this).val(); // todo id
             var dataString = "id=" + id + "&status=1";
-
+            $('#getupdatecheck'+id).removeClass('hidden');
             $.ajax({
                 type: "POST",
                 url: base_url+"todo/changestatus",
