@@ -60,7 +60,7 @@ class Attendance_model extends MY_Model {
                         ->join('class', 'class.class_id = class_routine.ClassID')
                         ->where(array(
                             //'class_routine.DepartmentID' => $where['department_id'],
-                            'DATE(class_routine.Start) >= ' => date('Y-m-d', strtotime($date)),
+                            //'DATE(class_routine.Start) >= ' => date('Y-m-d', strtotime($date)),
                             //'class_routine.BranchID' => $where['branch_id'],
                             // 'class_routine.BatchID' => $where['batch_id'],
                             //'class_routine.SemesterID' => $where['semester_id'],

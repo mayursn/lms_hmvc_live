@@ -4,15 +4,7 @@
     <div class=col-lg-12>
         <!-- col-lg-12 start here -->
         <div class="panel-default toggle panelMove panelClose panelRefresh">
-            <!-- Start .panel -->
-            <!--            <div class=panel-heading>
-                            <h4 class=panel-title><?php echo $title; ?></h4>
-                            <div class="panel-controls panel-controls-right">
-                                <a class="panel-refresh" href="#"><i class="fa fa-refresh s12"></i></a>
-                                <a class="toggle panel-minimize" href="#"><i class="fa fa-plus s12"></i></a>
-                                <a class="panel-close" href="#"><i class="fa fa-times s12"></i></a>
-                            </div>
-                        </div>-->
+           
             <div class=panel-body>
                 <div class="row filter-row">
                     <form id="attendance-routine" action="#" method="post" class="form-groups-bordered form-horizontal validate">
@@ -44,12 +36,13 @@
                                         <thead>
                                             <tr>
                                                 <td>No</td>
-                                                <td>Title</td>
+                                                <th>Title</th>
                                                 <th>Department</th>
                                                 <th>Branch</th>
                                                 <th>Semester</th>
                                                 <th>Class</th>
                                                 <th>Subject</th>
+                                                <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -60,24 +53,27 @@
                                             <?php
                                             $counter = 1;
                                             foreach ($professor_class_routine_list as $routine) {
+                                                if(date('Y-m-d', strtotime($routine['startdate'])) >= date('Y-m-d', strtotime($date)))
+                                                {
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $counter++; ?></td>
-                                                    <td><?php echo $routine->Title; ?></td>
-                                                    <td><?php echo $routine->d_name; ?></td>
-                                                    <td><?php echo $routine->c_name; ?></td>
-                                                    <td><?php echo $routine->s_name; ?></td>
-                                                    <td><?php echo $routine->class_name; ?></td>
-                                                    <td><?php echo $routine->subject_name; ?></td>                                                    
+                                                    <td><?php echo $routine['data']->Title; ?></td>
+                                                    <td><?php echo $routine['data']->d_name; ?></td>
+                                                    <td><?php echo $routine['data']->c_name; ?></td>
+                                                    <td><?php echo $routine['data']->s_name; ?></td>
+                                                    <td><?php echo $routine['data']->class_name; ?></td>
+                                                    <td><?php echo $routine['data']->subject_name; ?></td>    
+                                                    <td><?php echo date('Y-m-d', strtotime($routine['startdate'])) ?></td>
                                                     <td><?php 
-                                                        echo date('h:i A', strtotime($routine->Start)) . ' - ' .
-                                                        date('h:i A', strtotime($routine->End));
+                                                        echo date('h:i A', strtotime($routine['data']->Start)) . ' - ' .
+                                                        date('h:i A', strtotime($routine['data']->End));
                                                         ?>
                                                     </td>
                                                     <td>
                                                         <?php
                                                         $this->load->model('attendance/Attendance_model');
-                                                        $status = $this->Attendance_model->class_routine_status($routine->ClassRoutineId, date('Y-m-d', strtotime($date)));
+                                                        $status = $this->Attendance_model->class_routine_status($routine['data']->ClassRoutineId, date('Y-m-d', strtotime($date)));
                                                         ?>
 
                                                         <?php
@@ -89,7 +85,7 @@
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <a href="<?php echo base_url(); ?>attendance/take_attedance/<?php echo $routine->ClassRoutineId; ?>/<?php echo date('Y-m-d', strtotime($date)) ?>">
+                                                        <a href="<?php echo base_url(); ?>attendance/take_attedance/<?php echo $routine['data']->ClassRoutineId; ?>/<?php echo date('Y-m-d', strtotime($routine['startdate'])) ?>">
                                                             <span class="label label-primary mr6 mb6">
                                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                                                 Attendance
@@ -97,7 +93,10 @@
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php 
+                                              }
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

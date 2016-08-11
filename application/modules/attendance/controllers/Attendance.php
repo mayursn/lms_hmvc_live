@@ -41,7 +41,7 @@ class Attendance extends MY_Controller {
             $this->data['professor_class_routine_list'] = $this->professor_date_wise_class_routine(
                     $this->session->userdata('professor_id'), $_POST['date']);
             $this->data['date'] = $_POST['date'];
-           
+          
         }
         $this->data['title'] = 'Attendance';
         $this->data['page'] = 'attendance';        
@@ -127,8 +127,11 @@ class Attendance extends MY_Controller {
             $class_routine = $this->Attendance_model->professor_class_routine_attendance($id, $date);
             $attendance_routine = array();
             $selected_date = date('Y-m-d', strtotime($date));
+            $datearray=array();
+            $i=0;
             foreach ($class_routine as $row) {
                 if ($row->RecurrenceRule) {
+                    
                     //parse reccurrence rule
                     $rule = $this->class_routine_attendance->parse_reccurrence_rule($row->RecurrenceRule);
                     $rule_array = array();
@@ -140,15 +143,21 @@ class Attendance extends MY_Controller {
                     $conditional_rules = $this->class_routine_attendance->conditional_reccurrence_rule($reccur_rule);
                     $conditional_rules['DTSTART'] = $row->Start;
                     $rrule = new RRule\RRule($conditional_rules);
+                   
                     foreach ($rrule as $occurrence) {
-                        if ($occurrence->format('Y-m-d') == $selected_date) {
-                            array_push($attendance_routine, $row);
-                            //echo $occurrence->format('Y-m-d');
-                            break;
-                        }
-                        //break;
+                        $datearray[$i]['startdate']=$occurrence->format('Y-m-d');
+                        $datearray[$i]['rutid']=$row->ClassRoutineId;
+                        $datearray[$i]['data']=$row;
+                        $i++;
                     }
+                    
+              
+                    
                 } else {
+                    $datearray[$i]['startdate']=$row->Start;
+                        $datearray[$i]['rutid']=$row->ClassRoutineId;
+                         $datearray[$i]['data']=$row;
+                        $i++;
                     //single schedule event
                     array_push($attendance_routine, $row);
                 }
@@ -158,8 +167,7 @@ class Attendance extends MY_Controller {
         foreach ($attendance_routine as $row) {
             array_push($attendance_data, $row);
         }
-
-        return $attendance_routine;
+        return $datearray;
     }
     
     
