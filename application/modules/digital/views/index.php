@@ -16,7 +16,7 @@ $delete = delete_permission($permission, 'Library');
                 <?php } ?>
                 <?php if ($create || $read || $update || $delete) { ?>
                 <div class="row filter-row">
-                <form action="#" method="post" id="searchform">
+                <form action="#" method="post" id="library-form">
                     <div class="form-group col-sm-3 validating">
                         <label><?php echo ucwords("department"); ?></label>
                         <select id="courses" name="degree" class="form-control">
@@ -179,8 +179,28 @@ $delete = delete_permission($permission, 'Library');
 </div>
 <!-- End #content -->
 <script type="text/javascript">
-    
-   $("#searchform #btnsubmit").click(function(){
+     $(document).ready(function () {
+     var form = $("#library-form");
+
+        $("#library-form #btnsubmit").click(function () {
+              $("#library-form").validate({
+       rules: {
+                degree: "required",
+                course: "required",
+                batch: "required",
+                semester: "required"
+            
+                },
+                messages: {
+                degree: "Select Department",
+                course: "Select Branch",
+                batch: "Select Batch",
+                semester: "Select Semester"            
+                
+                }
+    });
+            if (form.valid() == true)
+            {
            var degree =  $("#courses").val();
            var course =  $("#branches").val();
            var batch =  $("#batches").val();
@@ -197,7 +217,9 @@ $delete = delete_permission($permission, 'Library');
                 
             });
              return false;
-         });
+        }
+        });
+    });
         $("#courses").change(function(){
                 var degree = $(this).val();
                 

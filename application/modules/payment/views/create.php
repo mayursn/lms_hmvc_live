@@ -28,23 +28,23 @@ $degree =  $this->Degree_model->get_all();
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Branch<span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="course" id="course" required="">
-
+                                <select class="form-control" name="course" id="course" >
+<option value="">Select</option>                                                        
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Batch<span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="batch" id="batch" required="">
-
+                                <select class="form-control" name="batch" id="batch" >
+<option value="">Select</option>                                                        
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Semester<span style="color:red">*</span></label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="semester" id="semester" required="">
+                                <select class="form-control" name="semester" id="semester">
                                     <option value="">Select</option>                                                        
                                 </select>
                             </div>
@@ -151,7 +151,9 @@ $degree =  $this->Degree_model->get_all();
         });
         $("#makepayment").validate({
             rules: {
+                degree: "required",
                 course: "required",
+                batch:"required",
                 student: "required",
                 fees: {
                     required: true,
@@ -164,7 +166,9 @@ $degree =  $this->Degree_model->get_all();
                 ac_holder_name: "required"
             },
             messages: {
-                course: "Please select department Name",
+                degree: "Please select department",
+                course: "Please select branch",
+                batch:"Please select batch",
                 student: "Please select student",
                 fees: {
                     required: "Please enter fee amount"

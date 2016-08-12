@@ -16,7 +16,7 @@ $delete = delete_permission($permission, 'Study_Resource');
                 <?php } ?>
                 <div class="row filter-row">
                     <?php if ($create || $read || $update || $delete) { ?>
-                        <form action="#" method="post" id="searchform">
+                        <form action="#" method="post" id="studysearchform">
                             <div class="form-group col-sm-3 validating">
                                 <label>Department</label>
                                 <select id="courses" name="degree" class="form-control">
@@ -182,9 +182,28 @@ $delete = delete_permission($permission, 'Study_Resource');
 
 <script type="text/javascript">
     $(document).ready(function () {
+     var form = $("#studysearchform");
 
-        $("#searchform #btnsubmit").click(function () {
-            var degree = $("#courses").val();
+        $("#studysearchform #btnsubmit").click(function () {
+              $("#studysearchform").validate({
+       rules: {
+                     degree: "required",
+                course: "required",
+                batch: "required",
+                semester: "required"
+            
+                },
+                messages: {
+                degree: "Select Department",
+                course: "Select Branch",
+                batch: "Select Batch",
+                semester: "Select Semester"            
+                
+                }
+    });
+            if (form.valid() == true)
+            {
+             var degree = $("#courses").val();
             var course = $("#branches").val();
             var batch = $("#batches").val();
             var semester = $("#semesters").val();
@@ -200,7 +219,12 @@ $delete = delete_permission($permission, 'Study_Resource');
 
             });
             return false;
+        }
         });
+    });
+    $(document).ready(function () {
+
+       
         $("#courses").change(function () {
             var degree = $(this).val();
 

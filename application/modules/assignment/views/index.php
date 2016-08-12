@@ -565,18 +565,22 @@ $delete = delete_permission($permission, 'Assignment');
         
          var formn = $('#not-submitted-search');
           $('#not-submit').on('click', function () {
-                $("#not-submit").validate({
+                $("#not-submitted-search").validate({
                     rules: {
                         degree_search: "required",
                         course_search: "required",
-                        batch_search: "required",
-                        semester_search: "required"
+                        subject_search: "required",
+                        divclass: "required",
+                        semester_search: "required",
+                        assign_id: "required"
                     },
                     messages: {
                         degree_search: "Select department",
                         course_search: "Select branch",
-                        batch_search: "Select batch",
-                        semester_search: "Select semester"
+                        subject_search: "Select subject",
+                        divclass: "Select class",
+                        semester_search: "Select semester",
+                        assign_id: "Select assignment"
                     }
                 });
 
@@ -698,18 +702,22 @@ $delete = delete_permission($permission, 'Assignment');
         
          var form = $('#assignment-search');
           $('#search-assignment-structure-data').on('click', function () {
-                $("#assignment-search-submitted").validate({
+                $("#assignment-search").validate({
                     rules: {
                         degree_search: "required",
                         course_search: "required",
                         batch_search: "required",
-                        semester_search: "required"
+                        subject_search:"required",
+                        semester_search: "required",
+                        divclass: "required"
                     },
                     messages: {
                         degree_search: "Select department",
                         course_search: "Select branch",
                         batch_search: "Select batch",
-                        semester_search: "Select semester"
+                        subject_search:"Select Subject",
+                        semester_search: "Select Semester",
+                        divclass: "Select class"
                     }
                 });
 
@@ -821,17 +829,17 @@ $delete = delete_permission($permission, 'Assignment');
         
          var forms = $('#submitted-filter');
           $('#submitted').on('click', function () {
-                $("#submitted").validate({
+                $("#submitted-filter").validate({
                     rules: {
                         degree_search: "required",
                         course_search: "required",
-                        batch_search: "required",
+                        subject_search: "required",
                         semester_search: "required"
                     },
                     messages: {
                         degree_search: "Select department",
                         course_search: "Select branch",
-                        batch_search: "Select batch",
+                        subject_search: "Select subject",
                         semester_search: "Select semester"
                     }
                 });

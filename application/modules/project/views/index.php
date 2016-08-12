@@ -5,8 +5,8 @@ $create = create_permission($permission, 'Project');
 $read = read_permission($permission, 'Project');
 $update = update_permisssion($permission, 'Project');
 $delete = delete_permission($permission, 'Project');
- $this->load->model('classes/Class_model');
-                                            $class = $this->Class_model->order_by_column('class_name');
+$this->load->model('classes/Class_model');
+$class = $this->Class_model->order_by_column('class_name');
 ?>
 <div class=row>                      
 
@@ -25,202 +25,201 @@ $delete = delete_permission($permission, 'Project');
                     </ul>
                     <div id="import-tab-content" class="tab-content">
                         <div class="tab-pane fade active in" id="project-list">
-                            <?php if($create){ ?>
-                            <a class="links"  onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_create/');" href="#" id="navfixed" data-toggle="tab"><i class="fa fa-plus"></i> Project</a>
+                            <?php if ($create) { ?>
+                                <a class="links"  onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_create/');" href="#" id="navfixed" data-toggle="tab"><i class="fa fa-plus"></i> Project</a>
                             <?php } ?>
                             <div class="row filter-row">
-                                <?php if($create || $read || $update || $delete){ ?>
-                                <form action="#" method="post" id="searchform">
-                                    <div class="form-group col-sm-3 validating">
-                                        <label>Department</label>
-                                        <select id="filterdegree" name="degree" class="form-control">
-                                            <option value="">Select</option>
-                                            <?php foreach ($degree as $row) { ?>
-                                                <option value="<?php echo $row->d_id; ?>"><?php echo $row->d_name; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-2 validating">
-                                        <label>Branch</label>
-                                        <select id="filtercourse" name="course" class="form-control">
-                                            <option value="">Select</option>
+                                <?php if ($create || $read || $update || $delete) { ?>
+                                    <form action="#" method="post" id="project-form">
+                                        <div class="form-group col-sm-3 validating">
+                                            <label>Department</label>
+                                            <select id="filterdegree" name="degree" class="form-control">
+                                                <option value="">Select</option>
+                                                <?php foreach ($degree as $row) { ?>
+                                                    <option value="<?php echo $row->d_id; ?>"><?php echo $row->d_name; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-2 validating">
+                                            <label>Branch</label>
+                                            <select id="filtercourse" name="course" class="form-control">
+                                                <option value="">Select</option>
 
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-2 validating">
-                                        <label>Batch</label>
-                                        <select id="filterbatch" name="batch" class="form-control">
-                                            <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-2 validating">
+                                            <label>Batch</label>
+                                            <select id="filterbatch" name="batch" class="form-control">
+                                                <option value="">Select</option>
 
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-2 validating">
-                                        <label> Semester</label>
-                                        <select id="filtersemester" name="semester" class="form-control">
-                                            <option value="">Select</option>
-                                            <?php foreach ($semester as $row) { ?>
-                                                <option value="<?php echo $row->s_id; ?>"
-                                                        ><?php echo $row->s_name; ?></option>
-                                                    <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-2">
-                                        <label><?php echo ucwords("Class"); ?><span style="color:red"></span></label>
-                                        <select class="form-control filter-rows" name="filterclass" id="filterclass" >
-                                            <option value="">Select</option>
-                                            <?php
-                                           
-                                            //$this->db->select('class_id,class_name');
-                                             //$this->db->get('class')->result_array();
-                                            
-                                            foreach ($class as $c) {
-                                                ?>
-                                                <option value="<?php echo $c->class_id ?>"><?php echo $c->class_name; ?></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-2 validating">
+                                            <label> Semester</label>
+                                            <select id="filtersemester" name="semester" class="form-control">
+                                                <option value="">Select</option>
+                                                <?php foreach ($semester as $row) { ?>
+                                                    <option value="<?php echo $row->s_id; ?>"
+                                                            ><?php echo $row->s_name; ?></option>
+                                                        <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label><?php echo ucwords("Class"); ?><span style="color:red"></span></label>
+                                            <select class="form-control filter-rows" name="filterclass" id="filterclass" >
+                                                <option value="">Select</option>
                                                 <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-1">
-                                        <label>&nbsp;</label><br/>
-                                        <button type="submit" id="btnsubmit" class="submit btn btn-info vd_bg-green">Go</button>
-                                    </div>
-                                </form>
+                                                //$this->db->select('class_id,class_name');
+                                                //$this->db->get('class')->result_array();
+
+                                                foreach ($class as $c) {
+                                                    ?>
+                                                    <option value="<?php echo $c->class_id ?>"><?php echo $c->class_name; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-1">
+                                            <label>&nbsp;</label><br/>
+                                            <button type="submit" id="btnsubmit" class="submit btn btn-info vd_bg-green">Go</button>
+                                        </div>
+                                    </form>
                                 <?php } ?>
                             </div>
                             <div id="getresponse">
-                                <?php if($create || $read || $update || $delete){ ?>
-                                <table id="datatable-list" class="table table-striped table-bordered table-responsive" cellspacing=0 width=100%>
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>											
-                                            <th>Project Title</th>
-                                            <th>Student</th>											
-                                            <th>Department</th>	
-                                            <th>Branch</th>
-                                            <th>Batch</th>											
-                                            <th>Semester</th>
-                                            <th>Class</th>
-                                            <th>File</th>
-                                            <th>Submission Date</th>
-					   <th>Status</th>
-                                            <?php if($update || $delete){ ?>
-                                            <th>Action</th>	
-                                            <?php } ?>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <?php
-                                        foreach ($project as $row):
-                                            ?>
+                                <?php if ($create || $read || $update || $delete) { ?>
+                                    <table id="datatable-list" class="table table-striped table-bordered table-responsive" cellspacing=0 width=100%>
+                                        <thead>
                                             <tr>
-                                                <td></td>	
-                                                <td><?php echo $row->pm_title; ?></td>	
-                                                <td>
-                                                    <?php
-                                                    $stu = explode(',', $row->pm_student_id);
-                                                    $i = 1;
-
-                                                    foreach ($student as $std) {
-
-
-                                                        if (in_array($std->std_id, $stu)) {
-
-                                                            if ($i < 3) {
-                                                                echo $std->std_first_name . '&nbsp' . $std->std_last_name . ', ';
-                                                            }
-                                                            $i++;
-                                                        }
-                                                    }
-                                                    if (count($stu) > 2) {
-                                                        ?>
-                                                        <a onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_studentname/<?php echo $row->pm_id; ?>');" style="cursor:pointer; text-decoration: none;">Read More</a>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </td>    
-                                                <td>
-                                                    <?php
-                                                    foreach ($degree as $deg) {
-                                                        if ($deg->d_id == $row->pm_degree) {
-                                                            echo $deg->d_name;
-                                                        }
-                                                    }
-                                                    ?>
-                                                </td>	
-                                                <td>
-                                                    <?php
-                                                    foreach ($course as $crs) {
-                                                        if ($crs->course_id == $row->pm_course) {
-                                                            echo $crs->c_name;
-                                                        }
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                    foreach ($batch as $bch) {
-                                                        if ($bch->b_id == $row->pm_batch) {
-                                                            echo $bch->b_name;
-                                                        }
-                                                    }
-                                                    ?>
-                                                </td>	
-                                                <td>
-                                                    <?php
-                                                    foreach ($semester as $sem) {
-                                                        if ($sem->s_id == $row->pm_semester) {
-                                                            echo $sem->s_name;
-                                                        }
-                                                    }
-                                                    ?>
-
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                    foreach ($class as $c) {
-                                                        if ($c->class_id == $row->class_id) {
-                                                            echo $c->class_name;
-                                                        }
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td id="downloadedfile"> 
-                                                    <?php
-                                                    if (!empty($row->pm_filename)) {
-                                                        $all_files = explode(",", $row->pm_filename);
-                                                        foreach ($all_files as $p_file):
-                                                            ?>                                                    
-                                                            <a href="<?php echo base_url() . 'uploads/project_file/' . $p_file; ?>" download="" title="download"><i class="fa fa-download"></i></a>
-
-                                                            <?php
-                                                        endforeach;
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td><?php echo date_formats($row->pm_dos); ?></td>	
-						<td>
-                                                     <?php if ($row->pm_status == '1') { ?>
-                                                         <span class="label label-primary mr6 mb6" >Active</span>
-                                                     <?php } else { ?>	
-                                                         <span class="label label-danger mr6 mb6" >InActive</span>
-                                                     <?php } ?>
-                                                 </td>
-                                                   <?php if($update  || $delete){ ?>
-                                                <td class="menu-action">
-                                                    <?php if($update ){ ?>
-                                                    <a href="#" onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_edit/<?php echo $row->pm_id; ?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-primary mr6 mb6"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</span></a>
-                                                    <?php } ?>
-                                                    <?php if($delete){ ?>
-                                                    <a href="#" onclick="confirm_modal('<?php echo base_url(); ?>project/delete/<?php echo $row->pm_id; ?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-danger mr6 mb6"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</span></a>
-                                                    <?php } ?>
-                                                </td>
-                                                   <?php } ?>
+                                                <th>No</th>											
+                                                <th>Project Title</th>
+                                                <th>Student</th>											
+                                                <th>Department</th>	
+                                                <th>Branch</th>
+                                                <th>Batch</th>											
+                                                <th>Semester</th>
+                                                <th>Class</th>
+                                                <th>File</th>
+                                                <th>Submission Date</th>
+                                                <th>Status</th>
+                                                <?php if ($update || $delete) { ?>
+                                                    <th>Action</th>	
+                                                <?php } ?>
                                             </tr>
-                                        <?php endforeach; ?>															
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                            <?php
+                                            foreach ($project as $row):
+                                                ?>
+                                                <tr>
+                                                    <td></td>	
+                                                    <td><?php echo $row->pm_title; ?></td>	
+                                                    <td>
+                                                        <?php
+                                                        $stu = explode(',', $row->pm_student_id);
+                                                        $i = 1;
+
+                                                        foreach ($student as $std) {
+
+
+                                                            if (in_array($std->std_id, $stu)) {
+
+                                                                if ($i < 3) {
+                                                                    echo $std->std_first_name . '&nbsp' . $std->std_last_name . ', ';
+                                                                }
+                                                                $i++;
+                                                            }
+                                                        }
+                                                        if (count($stu) > 2) {
+                                                            ?>
+                                                            <a onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_studentname/<?php echo $row->pm_id; ?>');" style="cursor:pointer; text-decoration: none;">Read More</a>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </td>    
+                                                    <td>
+                                                        <?php
+                                                        foreach ($degree as $deg) {
+                                                            if ($deg->d_id == $row->pm_degree) {
+                                                                echo $deg->d_name;
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>	
+                                                    <td>
+                                                        <?php
+                                                        foreach ($course as $crs) {
+                                                            if ($crs->course_id == $row->pm_course) {
+                                                                echo $crs->c_name;
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        foreach ($batch as $bch) {
+                                                            if ($bch->b_id == $row->pm_batch) {
+                                                                echo $bch->b_name;
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>	
+                                                    <td>
+                                                        <?php
+                                                        foreach ($semester as $sem) {
+                                                            if ($sem->s_id == $row->pm_semester) {
+                                                                echo $sem->s_name;
+                                                            }
+                                                        }
+                                                        ?>
+
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        foreach ($class as $c) {
+                                                            if ($c->class_id == $row->class_id) {
+                                                                echo $c->class_name;
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td id="downloadedfile"> 
+                                                        <?php
+                                                        if (!empty($row->pm_filename)) {
+                                                            $all_files = explode(",", $row->pm_filename);
+                                                            foreach ($all_files as $p_file):
+                                                                ?>                                                    
+                                                                <a href="<?php echo base_url() . 'uploads/project_file/' . $p_file; ?>" download="" title="download"><i class="fa fa-download"></i></a>
+
+                                                                <?php
+                                                            endforeach;
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><?php echo date_formats($row->pm_dos); ?></td>	
+                                                    <td>
+                                                        <?php if ($row->pm_status == '1') { ?>
+                                                            <span class="label label-primary mr6 mb6" >Active</span>
+                                                        <?php } else { ?>	
+                                                            <span class="label label-danger mr6 mb6" >InActive</span>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <?php if ($update || $delete) { ?>
+                                                        <td class="menu-action">
+                                                            <?php if ($update) { ?>
+                                                                <a href="#" onclick="showAjaxModal('<?php echo base_url(); ?>modal/popup/project_edit/<?php echo $row->pm_id; ?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-primary mr6 mb6"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</span></a>
+                                                            <?php } ?>
+                                                            <?php if ($delete) { ?>
+                                                                <a href="#" onclick="confirm_modal('<?php echo base_url(); ?>project/delete/<?php echo $row->pm_id; ?>');"  data-toggle="tooltip" data-placement="top" ><span class="label label-danger mr6 mb6"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</span></a>
+                                                            <?php } ?>
+                                                        </td>
+                                                    <?php } ?>
+                                                </tr>
+                                            <?php endforeach; ?>															
+                                        </tbody>
+                                    </table>
                                 <?php } ?>
                             </div>
                         </div>
@@ -228,10 +227,10 @@ $delete = delete_permission($permission, 'Project');
                         <!-- tab content -->
                         <div class="tab-pane fade" id="submitted-project-list">
                             <div class="row filter-row">
-                                <form action="#" method="post" id="searchform-submitted">
+                                <form action="#" method="post" id="submitted-project-form">
                                     <div class="form-group col-sm-3 validating">
                                         <label>Department</label>
-                                        <select id="submit-course" name="degree" class="form-control">
+                                        <select id="submit-course" name="get_degree" class="form-control">
                                             <option value="">Select</option>
                                             <?php foreach ($degree as $row) { ?>
                                                 <option value="<?php echo $row->d_id; ?>"><?php echo $row->d_name; ?></option>
@@ -240,21 +239,21 @@ $delete = delete_permission($permission, 'Project');
                                     </div>
                                     <div class="form-group col-sm-3 validating">
                                         <label>Branch</label>
-                                        <select id="submit-branch" name="course" class="form-control">
+                                        <select id="submit-branch" name="get_course" class="form-control">
                                             <option value="">Select</option>
 
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-2 validating">
                                         <label>Batch</label>
-                                        <select id="submit-batch" name="batch" class="form-control">
+                                        <select id="submit-batch" name="get_batch" class="form-control">
                                             <option value="">Select</option>
 
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-2 validating">
                                         <label> Semester</label>
-                                        <select id="submit-semester" name="semester" class="form-control">
+                                        <select id="submit-semester" name="get_semester" class="form-control">
                                             <option value="">Select</option>
                                             <?php foreach ($semester as $row) { ?>
                                                 <option value="<?php echo $row->s_id; ?>"
@@ -267,7 +266,6 @@ $delete = delete_permission($permission, 'Project');
                                         <select class="form-control filter-rows" name="filterclass" id="submit-class" >
                                             <option value="">Select</option>
                                             <?php
-                                          
                                             foreach ($class as $c) {
                                                 ?>
                                                 <option value="<?php echo $c->class_id; ?>"><?php echo $c->class_name; ?></option>
@@ -385,26 +383,128 @@ $delete = delete_permission($permission, 'Project');
 
 
 <script>
+    $(document).ready(function () {
+        var form = $("#project-form");
 
-    $("#searchform #btnsubmit").click(function () {
-        var degree = $("#filterdegree").val();
-        var course = $("#filtercourse").val();
-        var batch = $("#filterbatch").val();
-        var semester = $("#filtersemester").val();
-        var divclass = $("#filterclass").val();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url(); ?>project/getprojects/allproject",
-            data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
-            success: function (response)
+        $("#project-form #btnsubmit").click(function () {
+            $("#project-form").validate({
+                rules: {
+                     degree: "required",
+                course: "required",
+                batch: "required",
+                semester: "required",
+                filterclass: "required"
+                },
+                messages: {
+                degree: "Select Department",
+                course: "Select Branch",
+                batch: "Select Batch",
+                semester: "Select Semester",
+                filterclass: "Select class"
+                
+                }
+            });
+            if (form.valid() == true)
             {
-                $("#getresponse").html(response);
+                var degree = $("#filterdegree").val();
+                var course = $("#filtercourse").val();
+                var batch = $("#filterbatch").val();
+                var semester = $("#filtersemester").val();
+                var divclass = $("#filterclass").val();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>project/getprojects/allproject",
+                    data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
+                    success: function (response)
+                    {
+                        $("#getresponse").html(response);
+                    }
+
+
+                });
+                return false;
             }
-
-
         });
-        return false;
+        
+        var forms = $("#submitted-project-form");
+
+        $("#submitted-project-form #btnsubmitted").click(function () {
+            $("#submitted-project-form").validate({
+                rules: {
+                get_degree: "required",
+                get_course: "required",
+                get_batch: "required",
+                get_semester: "required"                
+                },
+                messages: {
+                get_degree: "Select Department",
+                get_course: "Select Branch",
+                get_batch: "Select Batch",
+                get_semester: "Select Semester"
+                
+                
+                }
+            });
+            if (forms.valid() == true)
+            {
+                 var degree = $("#submit-course").val();
+            var course = $("#submit-branch").val();
+            var batch = $("#submit-batch").val();
+            var semester = $("#submit-semester").val();
+            var divclass = $("#submit-class").val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>project/getprojects/submitted",
+                data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
+                success: function (response)
+                {
+                    $("#getsubmit").html(response);
+                }
+
+
+            });
+            return false;
+            }
+        });
+        
     });
+    //project-form
+//         $("#project-form").validate({
+//            rules: {
+//                degree: "required",
+//                course: "required",
+//                batch: "required",
+//                semester: "required",
+//                filterclass: "required",
+//            },
+//            messages: {
+//                degree: "Select department",
+//                course: "Select Branch",
+//                batch: "Select Batch",
+//                semester: "Select Semester",
+//                filterclass: "Select class",
+//            }
+//        });
+
+//    $("#searchform #btnsubmit").click(function () {
+//        var degree = $("#filterdegree").val();
+//        var course = $("#filtercourse").val();
+//        var batch = $("#filterbatch").val();
+//        var semester = $("#filtersemester").val();
+//        var divclass = $("#filterclass").val();
+//        $.ajax({
+//            type: "POST",
+//            url: "<?php echo base_url(); ?>project/getprojects/allproject",
+//            data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
+//            success: function (response)
+//            {
+//                $("#getresponse").html(response);
+//            }
+//
+//
+//        });
+//        return false;
+//    });
     $('#filterdegree').on('change', function () {
         var department_id = $(this).val();
         department_branch(department_id);
@@ -422,7 +522,7 @@ $delete = delete_permission($permission, 'Project');
         $.ajax({
             url: '<?php echo base_url(); ?>branch/department_branch/' + department_id,
             type: 'GET',
-            success: function (content) {                
+            success: function (content) {
                 var branch = jQuery.parseJSON(content);
                 console.log(branch);
                 $.each(branch, function (key, value) {
@@ -468,25 +568,25 @@ $delete = delete_permission($permission, 'Project');
 
     $(document).ready(function () {
 
-        $("#searchform-submitted #btnsubmitted").click(function () {
-            var degree = $("#submit-course").val();
-            var course = $("#submit-branch").val();
-            var batch = $("#submit-batch").val();
-            var semester = $("#submit-semester").val();
-            var divclass = $("#submit-class").val();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url(); ?>project/getprojects/submitted",
-                data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
-                success: function (response)
-                {
-                    $("#getsubmit").html(response);
-                }
-
-
-            });
-            return false;
-        });
+//        $("#searchform-submitted #btnsubmitted").click(function () {
+//            var degree = $("#submit-course").val();
+//            var course = $("#submit-branch").val();
+//            var batch = $("#submit-batch").val();
+//            var semester = $("#submit-semester").val();
+//            var divclass = $("#submit-class").val();
+//            $.ajax({
+//                type: "POST",
+//                url: "<?php echo base_url(); ?>project/getprojects/submitted",
+//                data: {'degree': degree, 'course': course, 'batch': batch, "semester": semester, "divclass": divclass},
+//                success: function (response)
+//                {
+//                    $("#getsubmit").html(response);
+//                }
+//
+//
+//            });
+//            return false;
+//        });
         $('#submit-course').on('change', function () {
             var department_id = $(this).val();
             department_branch(department_id);
