@@ -7,6 +7,10 @@
     .select2-container-multi .select2-choices .select2-search-field input{
         padding: 0px;
     }
+    .error{
+        color: #ed7a53;
+        font-weight: 700;
+    }
 </style><!-- Start .row -->
 <div class=row>                      
 
@@ -19,12 +23,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><?php echo ucwords("user type"); ?></label>
                     <div class="col-sm-5">
-                        <select class="form-control" id="user_type" name="user_type" required="">
+                        <select class="form-control" id="user_type" name="user_type" >
                             <option value="">Select</option>                            
                             <?php foreach ($user_type as $role) { ?>}
                                 <option value="<?php echo $role->role_id; ?>"><?php echo $role->role_name; ?></option>
                             <?php } ?>
-                        </select>                        
+                        </select>      
+                        <span class="user_type-error error"></span>                        
                     </div>
                 </div>
                 <div class="student_user hide">
@@ -37,6 +42,7 @@
                                     <option value="<?php echo $row->d_id; ?>"><?php echo $row->d_name; ?></option>
                                 <?php } ?>
                             </select>
+                            <span class="department-error error"></span>                        
                         </div>
                     </div>
                     <div class="form-group">
@@ -45,6 +51,7 @@
                             <select class="form-control" id="branch" name="branch">
                                 <option value="">Select</option>
                             </select>
+                            <span class="branch-error error"></span>                        
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,6 +60,7 @@
                             <select class="form-control" id="batch" name="batch">
                                 <option value="">Select</option>
                             </select>
+                              <span class="batch-error error"></span>                        
                         </div>
                     </div>
                     <div class="form-group" id="main_semester">
@@ -61,29 +69,34 @@
                             <select class="form-control" id="semester" name="semester">
                                 <option value="">Select</option>   
                             </select>
+                            <span class="semester-error error"></span>                        
                         </div>
                     </div>
                 </div>
                 <div class="form-group email_box hide">
                     <label class="col-sm-2 control-label"><?php echo ucwords("users"); ?></label>
                     <div class="col-sm-7">
-                        <select class="form-control email_select2" style="width: 70%; height: 30px;" id="email" name="email[]" required="" multiple=""> 
+                        <select class="form-control email_select2" style="width: 70%; height: 30px;" id="email" name="email[]"  multiple=""> 
                         </select>
                         <input class="col-md-2" type="checkbox" id="check_all_user"/>Select All
+                        <br>
+                        <span class="email-error error"></span>                        
                     </div>
                 </div>                
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><?php echo ucwords("Subject"); ?></label>
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="subject" required=""></textarea>
+                        <textarea class="form-control" id="subject" name="subject" ></textarea>
+                        <span class="subject-error error"></span>                        
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><?php echo ucwords("external email"); ?></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" name="cc"/>
+                        <input type="text" class="form-control" id="cc-email" name="cc"/>
+                        <span class="cc-email-error error"></span>                        
                     </div>
                 </div>
 
@@ -91,6 +104,7 @@
                     <label class="col-sm-2 control-label"><?php echo ucwords("Message"); ?></label>
                     <div class="col-sm-9">
                         <textarea id="cke_editor2" name="message" class="width-100 form-control"  rows="15" placeholder="Write your message here"></textarea>                                              
+                        <span class="message-error error"></span>                        
                     </div>
                 </div>
 
@@ -103,7 +117,7 @@
 
                 <div class="form-group form-actions">
                     <div class="col-sm-12 col-md-offset-2">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope append-icon"></i> <?php echo ucwords("Send"); ?></button>
+                        <button type="submit" id="compose-email" class="btn btn-primary"><i class="fa fa-envelope append-icon"></i> <?php echo ucwords("Send"); ?></button>
 
                     </div>
                 </div>
@@ -137,6 +151,198 @@
 </style>
 
 <script type="text/javascript">
+     $(document).ready(function(){
+          $("#s2id_autogen1").attr('value','');
+          $(".select2-choices").attr('id','select2ul');
+        $("#compose-email").click(function(){
+            
+            var user_type = $("#user_type").val();
+            var subject = $("#subject").val();
+            var cc_email = $("#cc-email").val();
+            
+            if(user_type=='')
+            {
+                $(".user_type-error").html('Please select user type');
+                return false;
+            }
+            else{               
+
+            var user_type_value = $("#user_type option:selected").text();
+            if(user_type_value=="Student")
+            {
+                var department = $("#department").val();
+                var branch = $("#branch").val();
+                var batch = $("#batch").val();
+                var semester = $("#semester").val();
+                if(department=='')
+                {
+                      $(".department-error").html('Please select department');
+                      return false;
+                }
+                else{
+                      $(".department-error").html('');
+                }
+                if(branch=='')
+                {
+                      $(".branch-error").html('Please select branch');
+                      return false;
+                }
+                else{
+                      $(".branch-error").html('');
+                }
+                if(batch=='')
+                {
+                      $(".batch-error").html('Please select batch');
+                         return false;
+                }
+                else{
+                      $(".batch-error").html('');
+                }
+                 if(semester=='')
+                {
+                      $(".semester-error").html('Please select semester');
+                         return false;
+                }
+                else{
+                      $(".semester-error").html('');
+                }
+            }
+
+
+                $(".user_type-error").html('');
+            }
+            if ($("#s2id_autogen1").val()=='')
+            {
+                if ($('.select2-choices li').length == 1)
+                {
+                    $(".email-error").html('Please select user type');                
+                    return false;
+                }
+                else{
+                    $(".email-error").html('');
+                }
+            }
+            
+                 if(cc_email!='')
+                {
+                    var x = cc_email;
+                    var atpos = x.indexOf("@");
+                    var dotpos = x.lastIndexOf(".");
+                    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+                        $(".cc-email-error").html('Please enter valid email');
+                        return false;
+                    }
+                    else{
+                        $(".cc-email-error").html('');
+                    }
+                }
+                else
+                {
+                      $(".cc-email-error").html('');
+                }
+                if(subject=='')
+                {
+                      $(".subject-error").html('Please enter subject');
+                      return false;
+                }
+                else
+                {
+                      $(".subject-error").html('');
+                }
+                
+                var messageLength = CKEDITOR.instances['cke_editor2'].getData().replace(/<[^>]*>/gi, '').length;
+                if( !messageLength ) {
+                    
+                    $(".message-error").html('Please enter a message');
+                    return false;
+                }
+                else{
+                    $(".message-error").html('');
+                }
+            });
+            
+            $("#user_type").change(function(){
+               var user_type = $("#user_type").val();
+               if(user_type=='')
+               {
+                    $(".user_type-error").html('Please select user type');
+                    return false;
+               }
+               else
+               {
+                    $(".user_type-error").html('');
+               }
+            });
+            
+            $("#branch").change(function(){
+               var branch = $("#branch").val();
+               if(branch=='')
+                {
+                    $(".branch-error").html('Please select branch');
+                    return false;
+                }
+                else{
+                    $(".branch-error").html('');
+                }
+            });
+            $("#department").change(function(){
+               var department = $("#department").val();
+               if(department=='')
+                {
+                    $(".department-error").html('Please select department');
+                    return false;
+                }
+                else{
+                    $(".department-error").html('');
+                }
+            });
+            $("#batch").change(function(){
+               var batch = $("#batch").val();
+               if(batch=='')
+                {
+                    $(".batch-error").html('Please select batch');
+                    return false;
+                }
+                else{
+                    $(".batch-error").html('');
+                }
+            });
+             $("#semester").change(function(){
+               var semester = $("#semester").val();
+               if(semester=='')
+                {
+                    $(".semester-error").html('Please select semester');
+                    return false;
+                }
+                else{
+                    $(".semester-error").html('');
+                }
+            });
+             $("#subject").change(function(){
+               var subject = $("#subject").val();
+               if(subject=='')
+                {
+                    $(".subject-error").html('Please enter subject');
+                    return false;
+                }
+                else{
+                    $(".subject-error").html('');
+                }
+            });
+            
+             $("#s2id_autogen1").change(function(){
+                if ($('.select2-choices li').length == 1)
+                {
+                    $(".email-error").html('Please select user type');                
+                    return false;
+                }
+                else{
+                    $(".email-error").html('');
+                }
+            });
+       });
+       
+   
     $(".email_select2").select2();
     $("#check_all_user").click(function () {
         
@@ -173,7 +379,7 @@
                 //show department branch and sem    
                 show_student_user();
                 show_email_box();
-                set_email_required();
+               // set_email_required();
             } else if (role_name == 'All') {
                 //show email box
                 hide_email_box();
@@ -183,7 +389,7 @@
                 show_email_box();
                 hide_student_user();
                 users_list_by_role(role_id);
-                set_email_required();
+              //  set_email_required();
             }
         });
 

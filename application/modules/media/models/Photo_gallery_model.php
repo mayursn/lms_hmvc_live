@@ -6,7 +6,7 @@ class Photo_gallery_model extends MY_Model {
 
     protected $primary_key = 'gallery_id';
     public $before_create = array('timestamps');
-    public $before_update = array('update_timestamps');
+   // public $before_update = array('update_timestamps');
 
     /**
      * Set the timestamp
@@ -22,16 +22,16 @@ class Photo_gallery_model extends MY_Model {
 
         return $gallery;
     }	
-    protected function update_timestamps($gallery)
-    {
-        if(check_role_approval())
-        {
-            $gallery['gal_status'] = 0;
-        }
-        
-        $gallery['updated_date'] = date('Y-m-d H:i:s');
-        return $gallery;
-    }
+//    protected function update_timestamps($gallery)
+//    {
+//        if(check_role_approval())
+//        {
+//            $gallery['gal_status'] = 0;
+//        }
+//        
+//        $gallery['updated_date'] = date('Y-m-d H:i:s');
+//        return $gallery;
+//    }
     function get_all_folder_photo($id) {
         return $this->db->get_where("photo_gallery", array("folder_id" => $id))->result();
     }
